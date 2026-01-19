@@ -1,0 +1,480 @@
+/* ==UserStyle==
+@name         tokimeki bluesky minimize
+@namespace    scrapbox.io/tantei/tokimeki_bluesky_minimize
+@version      1.1.0
+@license      MIT License
+@preprocessor default
+==/UserStyle== */
+
+@-moz-document url-prefix("https://tokimeki.blue/") {
+  /* 絵文字をぺったらこくする */
+  @font-face {
+    font-family: MyFontFamily;
+    src: local("Yu Gothic"),
+    local("游ゴシック"),
+    local("YuGothic"),
+    local("游ゴシック体");
+  }
+  @font-face {
+    font-family: MyFontFamily;
+    font-weight: bold;
+    src: local("Yu Gothic"),
+    local("游ゴシック"),
+    local("YuGothic"),
+    local("游ゴシック体");
+  }
+  @font-face {
+    font-family: MyFontFamily;
+    src: local("Segoe UI Emoji"),
+         local("Segoe UI Symbol"),
+         local("Apple Color Emoji"),
+         local("Noto Color Emoji"),
+         local("Noto Emoji");
+    unicode-range: /*U+23, U+2A, U+30-39,*/ U+A9, U+AE, U+200D, U+203C, U+2049, U+20E3, U+2122, U+2139, U+2194-2199, U+21A9-21AA, U+231A-231B, U+2328, U+23CF, U+23E9-23F3, U+23F8-23FA, U+24C2, U+25AA-25AB, U+25B6, U+25C0, U+25FB-25FE, U+2600-2604, U+260E, U+2611, U+2614-2615, U+2618, U+261D, U+2620, U+2622-2623, U+2626, U+262A, U+262E-262F, U+2638-263A, U+2640, U+2642, U+2648-2653, U+2660, U+2663, U+2665-2666, U+2668, U+267B, U+267F, U+2692-2697, U+2699, U+269B-269C, U+26A0-26A1, U+26AA-26AB, U+26B0-26B1, U+26BD-26BE, U+26C4-26C5, U+26C8, U+26CE-26CF, U+26D1, U+26D3-26D4, U+26E9-26EA, U+26F0-26F5, U+26F7-26FA, U+26FD, U+2702, U+2705, U+2708-270D, U+270F, U+2712, U+2714, U+2716, U+271D, U+2721, U+2728, U+2733-2734, U+2744, U+2747, U+274C, U+274E, U+2753-2755, U+2757, U+2763-2764, U+2795-2797, U+27A1, U+27B0, U+27BF, U+2934-2935, U+2B05-2B07, U+2B1B-2B1C, U+2B50, U+2B55, U+3030, U+303D, U+3297, U+3299, U+FE0F, U+1F004, U+1F0CF, U+1F170-1F171, U+1F17E-1F17F, U+1F18E, U+1F191-1F19A, U+1F1E6-1F1FF, U+1F201-1F202, U+1F21A, U+1F22F, U+1F232-1F23A, U+1F250-1F251, U+1F300-1F321, U+1F324-1F393, U+1F396-1F397, U+1F399-1F39B, U+1F39E-1F3F0, U+1F3F3-1F3F5, U+1F3F7-1F4FD, U+1F4FF-1F53D, U+1F549-1F54E, U+1F550-1F567, U+1F56F-1F570, U+1F573-1F57A, U+1F587, U+1F58A-1F58D, U+1F590, U+1F595-1F596, U+1F5A4-1F5A5, U+1F5A8, U+1F5B1-1F5B2, U+1F5BC, U+1F5C2-1F5C4, U+1F5D1-1F5D3, U+1F5DC-1F5DE, U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF, U+1F5F3, U+1F5FA-1F64F, U+1F680-1F6C5, U+1F6CB-1F6D2, U+1F6E0-1F6E5, U+1F6E9, U+1F6EB-1F6EC, U+1F6F0, U+1F6F3-1F6F8, U+1F910-1F93A, U+1F93C-1F93E, U+1F940-1F945, U+1F947-1F94C, U+1F950-1F96B, U+1F980-1F997, U+1F9C0, U+1F9D0-1F9E6, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+  }
+
+  @font-face {
+    font-family: MyFontFamily;
+    font-weight: bold;
+    src: local("Segoe UI Emoji"),
+         local("Segoe UI Symbol"),
+         local("Apple Color Emoji"),
+         local("Noto Color Emoji"),
+         local("Noto Emoji");
+    unicode-range: /*U+23, U+2A, U+30-39,*/ U+A9, U+AE, U+200D, U+203C, U+2049, U+20E3, U+2122, U+2139, U+2194-2199, U+21A9-21AA, U+231A-231B, U+2328, U+23CF, U+23E9-23F3, U+23F8-23FA, U+24C2, U+25AA-25AB, U+25B6, U+25C0, U+25FB-25FE, U+2600-2604, U+260E, U+2611, U+2614-2615, U+2618, U+261D, U+2620, U+2622-2623, U+2626, U+262A, U+262E-262F, U+2638-263A, U+2640, U+2642, U+2648-2653, U+2660, U+2663, U+2665-2666, U+2668, U+267B, U+267F, U+2692-2697, U+2699, U+269B-269C, U+26A0-26A1, U+26AA-26AB, U+26B0-26B1, U+26BD-26BE, U+26C4-26C5, U+26C8, U+26CE-26CF, U+26D1, U+26D3-26D4, U+26E9-26EA, U+26F0-26F5, U+26F7-26FA, U+26FD, U+2702, U+2705, U+2708-270D, U+270F, U+2712, U+2714, U+2716, U+271D, U+2721, U+2728, U+2733-2734, U+2744, U+2747, U+274C, U+274E, U+2753-2755, U+2757, U+2763-2764, U+2795-2797, U+27A1, U+27B0, U+27BF, U+2934-2935, U+2B05-2B07, U+2B1B-2B1C, U+2B50, U+2B55, U+3030, U+303D, U+3297, U+3299, U+FE0F, U+1F004, U+1F0CF, U+1F170-1F171, U+1F17E-1F17F, U+1F18E, U+1F191-1F19A, U+1F1E6-1F1FF, U+1F201-1F202, U+1F21A, U+1F22F, U+1F232-1F23A, U+1F250-1F251, U+1F300-1F321, U+1F324-1F393, U+1F396-1F397, U+1F399-1F39B, U+1F39E-1F3F0, U+1F3F3-1F3F5, U+1F3F7-1F4FD, U+1F4FF-1F53D, U+1F549-1F54E, U+1F550-1F567, U+1F56F-1F570, U+1F573-1F57A, U+1F587, U+1F58A-1F58D, U+1F590, U+1F595-1F596, U+1F5A4-1F5A5, U+1F5A8, U+1F5B1-1F5B2, U+1F5BC, U+1F5C2-1F5C4, U+1F5D1-1F5D3, U+1F5DC-1F5DE, U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF, U+1F5F3, U+1F5FA-1F64F, U+1F680-1F6C5, U+1F6CB-1F6D2, U+1F6E0-1F6E5, U+1F6E9, U+1F6EB-1F6EC, U+1F6F0, U+1F6F3-1F6F8, U+1F910-1F93A, U+1F93C-1F93E, U+1F940-1F945, U+1F947-1F94C, U+1F950-1F96B, U+1F980-1F997, U+1F9C0, U+1F9D0-1F9E6, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
+  }
+
+  /* コンパクト表示のアイコンをもっとコンパクトにする */
+  .timeline__item--compact {
+    --avatar-size: 32px;
+    --avatar-gap: 6px;
+    padding: 6px 0;
+  }
+  /* TL全体のpaddingを狭く */
+  .timeline--default {
+    padding: 10px;
+  }
+
+  /* TLの投稿1件ごとのpaddingを狭く */
+  .timeline__item {
+    padding: 10px 0px 4px 0px;
+  }
+
+  /* Reposted by～の行を狭く */
+  .timeline-repost-message {
+    margin-bottom: 4px;
+  }
+
+  /*  postごとのクリリンの位置調整 */
+  .timeline-menu-toggle {
+    top: 10px;
+    background-color: transparent;
+  }
+
+  /* 投稿の改行幅 */
+  .timeline__text {
+    line-height: 1.5;
+  }
+
+  /* 投稿の画像枠 */
+  .timeline-images-wrap {
+    margin-top: 4px;
+  }
+
+  /* TLのリアクションの行 */
+  .timeline-reaction,
+  .timeline__item--compact .timeline-reaction {
+    margin-top: 6px;
+  }
+
+  /* mentionタブの返信先を小さく */
+  .timeline__column--reply {
+    zoom: 0.8;
+    & .timeline-images-wrap {
+      width: 50%;
+    }
+  }
+
+  /* リプ表示時のケバブメニューの位置がおかしいのを調整 */
+  .timeline__item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "tokimini-reply tokimini-reply"
+      "tokimini-post tokimini-menu";
+  }
+  .timeline__column--reply{
+    grid-area: tokimini-reply;
+  }
+  .timeline__column:not(.timeline__column--reply) {
+    grid-area: tokimini-post;
+  }
+  .timeline-menu-toggle {
+    grid-area: tokimini-menu;
+    top: -4px;
+    right: -6px;
+  }
+
+  /* サムネの調整 */
+  .timeline-image {
+    border-radius: 2px !important;
+  }
+
+  .timeline-images-wrap:not(.timeline-image:only-child) .timeline-images.timeline-images--nocrop {
+      margin-left: auto;
+  }
+
+  /* ラベル警告の調整 */
+  @container timeline-item (width <= 345px) {
+    .timeline-images-wrap:has(.timeline-warn) {
+      margin-left: 0;
+      & .timeline-warn,
+      & .timeline-warn-hiding {
+        margin-left: 0;
+      }
+    }
+  }
+  .timeline-warn, .timeline-warn-hiding {
+    border-radius: 2px !important;
+  }
+  /* 切り取らないサムネの表示調整 */
+  :is(.deck-wrap,.single-wrap) .timeline-images-wrap:has(.timeline-image:only-child),
+  .notifications-item-images:has(.timeline-image:only-child){
+    /* 縦に長すぎるのは切る */
+    --timeline-images--nocrop-max-height: 12rem;
+    max-height: var(--timeline-images--nocrop-max-height);
+    overflow-y: hidden;
+    position: relative;
+    & .timeline-images.timeline-images--nocrop {
+      width: 50%;
+      margin-left: 0;
+      /* 縦長切れてるグラデ */
+      &::after {
+        content: '';
+        height: var(--timeline-images--nocrop-max-height);
+        width: 50%;
+        background: linear-gradient(rgba(0, 0, 0, 0), var(--bg-color-1) 1.5rem);
+        position: absolute;
+        z-index: 9;
+        top: calc(var(--timeline-images--nocrop-max-height) - 2rem);
+      }
+    }
+  }
+
+  /* ヘッダ下の隙間を狭く */
+  .timeline{
+  top: -16px;
+  }
+
+  /* 投稿欄の調整 */
+  @media (min-width: 768px) {
+    .publish-group--left .publish-wrap {
+      padding: 4px 8px !important;
+    }
+    .publish-quote {
+      padding: 12px 8px !important;
+    }
+    .editor-column {
+      padding: 12px 8px !important;
+    }
+  }
+  /* なぜか投稿欄のリプ元に埋め込みと同じクラスがついているので調整 */
+  .publish-wrap {
+    /* アイコン */
+    & .timeline-external__image--round {
+      aspect-ratio: 1 / 1 !important;
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      zoom: .5;
+    }
+    & .timeline-external {
+      padding: 0;
+      display: grid;
+      grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
+      border: 0;
+    }
+    & .timeline__meta {
+      margin: 0 .2rem;
+    }
+    & .timeline-external__content {
+      zoom: 1;
+    }
+    & .timeline-external__description{
+      margin-left:.2rem;
+    }
+    & .timeline-external--record-publish:before {
+      left: 12px;
+    }
+  }
+
+  /* リンクカードの大きさ */
+  .timeline-external {
+    margin-top: .5rem;
+    padding: .2rem .4rem;
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+    border: 1px solid var(--border-color-1);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-color-2);
+    box-sizing: border-box;
+    & .timeline-external {
+      padding: .2rem 0;
+    }
+  }
+  .timeline-external__content {
+    zoom: .9;
+    padding-top:.2rem;
+  }
+  /* 埋め込みカードのタイトルなど */
+  .timeline-external__title {
+    margin-top: .2rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 1;
+  }
+  .timeline-external__description {
+    color: var(--text-color-3);
+    font-size: 12px;
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .timeline-external__image {
+    aspect-ratio: 16 / 4 !important;
+    overflow: hidden;
+    background: rgb(0, 0, 0);
+    cursor: pointer;
+  }
+  /* QRT用の引用アイコンを縮小 */
+  .timeline-external__icon {
+    transform: scale(.6);
+    top: 0;
+    right: 0;
+  }
+  /* QRT用枠を上に詰める */
+  .timeline-external--record {
+    margin-top: 0;
+  }
+  .timeline-external--record .timeline-external__content {
+    margin-left: 2px;
+  }
+
+  /* X埋め込みの上下を削る */
+  .x-embed-wrap {
+    border-radius:4px;
+    overflow: hidden;
+    & iframe{
+      margin-top: -1rem;
+      margin-bottom: -6rem;
+    }
+  }
+
+  /* 通知カラムの内幅を調整 */
+  .timeline--notification {
+    padding: 0 8px 0 4px;
+    & .notifications-list__item:has( .timeline__item) {
+      padding-left: 4px;
+    }
+  }
+  /* 通知カラムの新着通知を調整*/
+  .notifications-list__new {
+    top: 10px;
+    right: 0px;
+  }
+  /* 通知カラムのフィルタ縦幅を調整 */
+  .notifications-filter-display {
+    margin: 0 0 16px !important;
+    padding: 8px !important;
+  }
+
+  .notification-column {
+    --tokimini-grid-template-columns-left: 20px;
+    grid-template-columns: var(--tokimini-grid-template-columns-left) 1fr;
+  }
+
+  .notification-authors {
+    margin-bottom: 4px;
+  }
+  .notifications-item__title {
+    margin-bottom: 2px;
+  }
+
+  /* 通知カラム内の埋め込みリンク表示の調整 */
+  @container timeline-item (width<=345px) {
+    .notifications-item-images:not(:has(.timeline-images)) {
+      margin-left: calc(var(--tokimini-grid-template-columns-left)*-1 - 4px);
+    }
+  }
+  /* 引用を除く埋め込みリンクの調整 */
+  .notifications-item-images:has(a:not([href*='bsky.app']):not([href*='tokimeki.blue'])) {
+    margin-top: .2rem !important;
+    /* 埋め込みリンクのラッパー */
+    & > div {
+    border-radius: 2px !important;
+    }
+    /* 埋め込みリンクの画像 */
+    & div:has(> img) {
+    aspect-ratio: 16 / 4 !important;
+    }
+    /* 概要ブロック */
+    & > div {
+      zoom: .9 !important;
+      padding: 0 !important;
+    }
+    & > div div:last-child {
+      padding: .4rem .2rem  .4rem .6rem !important;
+      border-top:0px !important;
+    }
+    /* 記事タイトル */
+    & > div div:last-child > div:has(a) {
+      margin-top: .2rem !important;
+      padding:0 !important;
+      line-height: 1.3 !important;
+      -webkit-line-clamp: 1 !important;
+    }
+    /* 記事概要 */
+    & > div div:last-child > div:has(a) + div {
+      margin-top: 0 !important;
+      padding:0 !important;
+      -webkit-line-clamp: 2 !important;
+    }
+  }
+
+  /* メディア欄 */
+  .media-list {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+  }
+  .media-item {
+    overflow: visible !important;
+    aspect-ratio: 16 / 9 !important;
+  }
+  .media-thumbnail__image.svelte-1l0a7op {
+    object-fit: contain;
+  }
+
+  /* DeckTLモード時 */
+  .deck-wrap {
+    /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
+    & .timeline__column {
+      grid-template-columns: var(--avatar-size) 1fr;
+      gap: var(--avatar-gap);
+    }
+
+    /* 幅Medium以上は動画を小さく */
+    @container timeline-item (width > 345px) {
+      .timeline-video-wrap {
+        width: 75%;
+      }
+    }
+
+    /*リアクションアイコンを縮小*/
+    & .timeline-reaction {
+    zoom: 0.9;
+    }
+
+    /* 複数画像を並べて表示時 */
+    & .timeline-images--compact {
+      gap: 4px;
+    }
+  }
+
+  /* シングルTLモード時 */
+  .single-wrap {
+    /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
+    .timeline__column {
+      grid-template-columns: var(--avatar-size) 1fr;
+      gap: 8px;
+      margin-right: 1rem;
+    }
+    /* 動画小さく */
+    .timeline-video-wrap {
+      width: 75%;
+    }
+    /* カラムアイコンの上下余白を減らす */
+    .side-bar-button.svelte-hy7sj0 {
+      height: 40px !important;
+    }
+  }
+
+  /* プロフィール表示時 */
+  .profile {
+    /* リプ元のサイズを戻す */
+    .timeline__column--reply {
+      zoom: 1;
+      .timeline-images-wrap {
+        width: 100%;
+      }
+    }
+    /* 縦長画像カットを戻して1枚画像をフル表示する */
+    .timeline-images-wrap:has(.timeline-image:only-child) {
+      max-height: unset;
+      overflow-y: visible;
+      .timeline-images.timeline-images--nocrop {
+        margin-left: auto;
+        margin-right: auto;
+        width: max-content;
+        max-width: 100%;
+        &::after {
+          content: none;
+        }
+      }
+    }
+    /* 埋め込みカードの大きさ */
+    .timeline-external {
+      margin-top: .5rem;
+      border: 1px solid var(--border-color-1);
+      border-radius: 4px;
+      & .timeline-external {
+        padding: .2rem 0;
+      }
+    }
+    /* 埋め込みカードのタイトルなど */
+    .timeline-external__title {
+      margin-top: .2rem;
+      line-height: 1.3;
+    }
+    .timeline-external__image {
+      border-bottom: 1px solid var(--border-color-1);
+      background: rgb(0, 0, 0);
+      cursor: pointer;
+    }
+  }
+
+  /* いいねを☆にしてるときの色をハートと合わせる */
+  .superstar {
+    --timeline-reaction-liked-icon-color: var(--primary-color) !important;
+  }
+
+  /* 通知ページの */
+  /* いいね通知アイコン */
+  .notification-icon--like {
+    /* 線のみに変更 */
+    background-color: transparent !important;
+    & svg {
+      stroke: var(--text-color-3) !important;
+    }
+  }
+
+  /* リポスト通知アイコン */
+  .notification-icon--repost {
+    /* 線のみに変更 */
+    background-color: transparent !important;
+    & svg {
+      stroke: var(--text-color-3) !important;
+    }
+  }
+
+  /* 画像拡大時の操作メニューのドロシャを濃くして白背景でも見やすくする */
+  .pswp__button,
+  .pswp__counter {
+    --usercss-pswp-drop-shadow-blur: 2px;
+    --usercss-pswp-drop-shadow-color: rgba(0, 0, 0, 0.2);
+    filter: drop-shadow(0px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(0px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color));
+    text-shadow: none;
+  }
+}
