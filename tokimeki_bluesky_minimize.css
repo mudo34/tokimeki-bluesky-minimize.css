@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         tokimeki bluesky minimize
 @namespace    scrapbox.io/tantei/tokimeki_bluesky_minimize
-@version      1.1.0
+@version      1.1.1
 @license      MIT License
 @preprocessor default
 ==/UserStyle== */
@@ -63,11 +63,13 @@
   /* Reposted by～の行を狭く */
   .timeline-repost-message {
     margin-bottom: 4px;
+    overflow: hidden;
   }
 
   /*  postごとのクリリンの位置調整 */
   .timeline-menu-toggle {
-    top: 10px;
+    top: 4px !important;
+    right: -8px !important;
     background-color: transparent;
   }
 
@@ -95,25 +97,64 @@
     }
   }
 
-  /* リプ表示時のケバブメニューの位置がおかしいのを調整 */
-  .timeline__item {
+  /* リプ表示時のケバブメニューの位置が直感的でないのを調整 */
+  .timeline__item:has(.timeline__column--reply) {
     display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      "tokimini-reply tokimini-reply"
-      "tokimini-post tokimini-menu";
+
+    & :last-of-type.timeline__column:not(.timeline__column--reply),
+    & .feed__column {
+      grid-column: 1;
+      grid-row-end: 5;
+    }
+
+    & .timeline-menu-toggle,
+    & .timeline-menu-toggle--feed {
+      grid-column: 1;
+      grid-row-end: 5;
+      position: relative !important;
+      left:100%;
+    }
+    & .timeline-menu-toggle {
+      transform: translateX(-70%) translateY(-50%);
+    }
+    & .timeline-menu-toggle--feed {
+      transform: translateX(-70%) translateY(-20%);
+    }
   }
-  .timeline__column--reply{
-    grid-area: tokimini-reply;
+
+/* フィードの表示の調整 */
+  @container timeline-item (width <= 345px) {
+    .feed__buttons {
+      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1);
+    }
   }
-  .timeline__column:not(.timeline__column--reply) {
-    grid-area: tokimini-post;
+  .feed {
+    box-shadow: none !important;
+    border:1px solid var(--border-color-1) !important;
+    border-radius: 2px !important;
   }
-  .timeline-menu-toggle {
-    grid-area: tokimini-menu;
-    top: -4px;
-    right: -6px;
+  .feed__column {
+    padding: .4rem !important;
+  }
+  .feed__avatar {
+    border-radius: 2px !important;
+  }
+  .feed__content {
+    transform: translateY(-.2rem);
+  }
+  .feed__text {
+    color: var(--text-color-3) !important;
+  }
+  .feed__buttons {
+    margin-top: .4rem !important;
+    gap: 6px !important;
+    justify-content: center;
+  }
+
+  /* followボタン隙間調整 */
+  .user-item:has(.button--follow) {
+    gap: 6px !important;
+    padding: .4rem .2rem 0 !important;
   }
 
   /* サムネの調整 */
@@ -172,46 +213,46 @@
     .publish-group--left .publish-wrap {
       padding: 4px 8px !important;
     }
-    .publish-quote {
+    .publish-quote--reply {
       padding: 12px 8px !important;
     }
     .editor-column {
       padding: 12px 8px !important;
     }
   }
-  /* なぜか投稿欄のリプ元に埋め込みと同じクラスがついているので調整 */
-  .publish-wrap {
-    /* アイコン */
+  /* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
+  .publish-wrap .publish-quote--reply {
     & .timeline-external__image--round {
       aspect-ratio: 1 / 1 !important;
       width: var(--avatar-size);
       height: var(--avatar-size);
       zoom: .5;
+      border-radius:50%;
     }
-    & .timeline-external {
-      padding: 0;
+    & .timeline-external:not(:has(.timeline-external-avatar)) {
+      padding: 0 !important;
       display: grid;
       grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
       border: 0;
-    }
-    & .timeline__meta {
-      margin: 0 .2rem;
-    }
-    & .timeline-external__content {
-      zoom: 1;
-    }
-    & .timeline-external__description{
-      margin-left:.2rem;
-    }
-    & .timeline-external--record-publish:before {
-      left: 12px;
+      & .timeline__meta {
+        margin: 0 .2rem;
+      }
+      & .timeline-external__content {
+        zoom: 1;
+      }
+      & .timeline-external__description{
+        margin-left:.2rem;
+      }
+      & .timeline-external--record-publish:before {
+        left: 12px;
+      }
     }
   }
 
   /* リンクカードの大きさ */
   .timeline-external {
-    margin-top: .5rem;
-    padding: .2rem .4rem;
+    margin-top: .5rem !important;
+    padding: .2rem .4rem !important;
     display: flex;
     gap: 0;
     flex-direction: column;
@@ -309,7 +350,7 @@
       margin-left: calc(var(--tokimini-grid-template-columns-left)*-1 - 4px);
     }
   }
-  /* 引用を除く埋め込みリンクの調整 */
+  /* 引用を除く通知欄の埋め込みリンクの調整 */
   .notifications-item-images:has(a:not([href*='bsky.app']):not([href*='tokimeki.blue'])) {
     margin-top: .2rem !important;
     /* 埋め込みリンクのラッパー */
