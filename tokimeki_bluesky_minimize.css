@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name         tokimeki bluesky minimize
 @namespace    scrapbox.io/tantei/tokimeki_bluesky_minimize
-@version      1.1.1
+@version      1.1.2
 @license      MIT License
 @preprocessor default
 ==/UserStyle== */
@@ -44,12 +44,27 @@
     unicode-range: /*U+23, U+2A, U+30-39,*/ U+A9, U+AE, U+200D, U+203C, U+2049, U+20E3, U+2122, U+2139, U+2194-2199, U+21A9-21AA, U+231A-231B, U+2328, U+23CF, U+23E9-23F3, U+23F8-23FA, U+24C2, U+25AA-25AB, U+25B6, U+25C0, U+25FB-25FE, U+2600-2604, U+260E, U+2611, U+2614-2615, U+2618, U+261D, U+2620, U+2622-2623, U+2626, U+262A, U+262E-262F, U+2638-263A, U+2640, U+2642, U+2648-2653, U+2660, U+2663, U+2665-2666, U+2668, U+267B, U+267F, U+2692-2697, U+2699, U+269B-269C, U+26A0-26A1, U+26AA-26AB, U+26B0-26B1, U+26BD-26BE, U+26C4-26C5, U+26C8, U+26CE-26CF, U+26D1, U+26D3-26D4, U+26E9-26EA, U+26F0-26F5, U+26F7-26FA, U+26FD, U+2702, U+2705, U+2708-270D, U+270F, U+2712, U+2714, U+2716, U+271D, U+2721, U+2728, U+2733-2734, U+2744, U+2747, U+274C, U+274E, U+2753-2755, U+2757, U+2763-2764, U+2795-2797, U+27A1, U+27B0, U+27BF, U+2934-2935, U+2B05-2B07, U+2B1B-2B1C, U+2B50, U+2B55, U+3030, U+303D, U+3297, U+3299, U+FE0F, U+1F004, U+1F0CF, U+1F170-1F171, U+1F17E-1F17F, U+1F18E, U+1F191-1F19A, U+1F1E6-1F1FF, U+1F201-1F202, U+1F21A, U+1F22F, U+1F232-1F23A, U+1F250-1F251, U+1F300-1F321, U+1F324-1F393, U+1F396-1F397, U+1F399-1F39B, U+1F39E-1F3F0, U+1F3F3-1F3F5, U+1F3F7-1F4FD, U+1F4FF-1F53D, U+1F549-1F54E, U+1F550-1F567, U+1F56F-1F570, U+1F573-1F57A, U+1F587, U+1F58A-1F58D, U+1F590, U+1F595-1F596, U+1F5A4-1F5A5, U+1F5A8, U+1F5B1-1F5B2, U+1F5BC, U+1F5C2-1F5C4, U+1F5D1-1F5D3, U+1F5DC-1F5DE, U+1F5E1, U+1F5E3, U+1F5E8, U+1F5EF, U+1F5F3, U+1F5FA-1F64F, U+1F680-1F6C5, U+1F6CB-1F6D2, U+1F6E0-1F6E5, U+1F6E9, U+1F6EB-1F6EC, U+1F6F0, U+1F6F3-1F6F8, U+1F910-1F93A, U+1F93C-1F93E, U+1F940-1F945, U+1F947-1F94C, U+1F950-1F96B, U+1F980-1F997, U+1F9C0, U+1F9D0-1F9E6, U+E0062-E0063, U+E0065, U+E0067, U+E006C, U+E006E, U+E0073-E0074, U+E0077, U+E007F;
   }
 
+.app .wrap {
+    --deck-border-radius: var(--border-radius-2);
+}
+
   /* コンパクト表示のアイコンをもっとコンパクトにする */
   .timeline__item--compact {
     --avatar-size: 32px;
     --avatar-gap: 6px;
     padding: 6px 0;
   }
+  
+  .timeline__meta {
+    margin-bottom: 1px !important;
+  }
+
+  /* ハンドル表示小さく */
+  .timeline__handle {
+    margin-top: 0px;
+    font-size: 13px;
+  }
+
   /* TL全体のpaddingを狭く */
   .timeline--default {
     padding: 10px;
@@ -73,9 +88,42 @@
     background-color: transparent;
   }
 
-  /* 投稿の改行幅 */
+  /* S幅以下 / TL本文の位置を調整 */
+  @container timeline-item (width <= 345px) {
+    .timeline__meta {
+      display: block;
+        & p {
+          height: calc(var(--avatar-size) / 2)
+        }
+    }
+    .timeline__column:not(.timeline__column--reply) .timeline-warn-wrap {
+      margin-top: .5rem;
+      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + .3rem);
+    }
+    .timeline__column.timeline__column--reply {
+      & .timeline-warn-wrap {
+        margin-top: .5rem;
+        margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
+      }
+      & .timeline-reaction {
+        margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
+      }
+    }
+    .notifications-item__title, .notifications-item__content {
+      margin-left: calc((var(--tokimini-grid-template-columns-left)) * -1 + .1rem);
+    }
+    .timeline-external ,
+    .timeline-twitter-external ,
+    .timeline-video-wrap,
+    .feed--embed{
+      margin-left: 0 !important;
+    }
+  }
+
+  /* 投稿の調整 */
   .timeline__text {
     line-height: 1.5;
+    letter-spacing: -0.01rem;
   }
 
   /* 投稿の画像枠 */
@@ -89,26 +137,69 @@
     margin-top: 6px;
   }
 
-  /* mentionタブの返信先を小さく */
+  /* 返信先を小さく */
   .timeline__column--reply {
     zoom: 0.8;
     & .timeline-images-wrap {
       width: 50%;
     }
   }
+  /* 返信ラインの位置調整*/
+  .timeline__item--compact .timeline__column--reply:before {
+    left: 0px !important;
+    width: 3px !important;
+    bottom: -40px !important;
+  }
+  /* 認証マークの位置を日付の横に移動 */
+  .timeline__meta {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 0;
+    align-items: center;
+  }
+  .timeline__user {
+    grid-column: 1 / -1;
+    grid-row: 1;
+  }
+  .timeline__date {
+    grid-column: 1;
+    grid-row: 2;
+    white-space: nowrap;
+  }
+  .timeline__verified {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    transform: translateX(.2rem) translateY(.21rem);
+  }
+  .timeline-translate-button {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    text-align: left;
+  }
+  
+  .modal-page .timeline__verified,
+  .profile .timeline__verified {
+    transform: translateX(.3rem) translateY(.025rem);
+  }
+
+  /* RT時のリプ元を非表示 */
+  .timeline-repost-message + .timeline__column--reply {
+    display: none;
+  }
+
 
   /* リプ表示時のケバブメニューの位置が直感的でないのを調整 */
   .timeline__item:has(.timeline__column--reply) {
-    display: grid;
+    display: grid !important;
 
-    & :last-of-type.timeline__column:not(.timeline__column--reply),
-    & .feed__column {
+    & :last-of-type.timeline__column:not(.timeline__column--reply) {
       grid-column: 1;
       grid-row-end: 5;
     }
 
-    & .timeline-menu-toggle,
-    & .timeline-menu-toggle--feed {
+    & .timeline-menu-toggle {
       grid-column: 1;
       grid-row-end: 5;
       position: relative !important;
@@ -117,17 +208,14 @@
     & .timeline-menu-toggle {
       transform: translateX(-70%) translateY(-50%);
     }
+    /* フィードは枠の分再調整 */
     & .timeline-menu-toggle--feed {
-      transform: translateX(-70%) translateY(-20%);
+      position: absolute !important;
+      transform: translateX(-90%) translateY(-10%);
     }
   }
 
-/* フィードの表示の調整 */
-  @container timeline-item (width <= 345px) {
-    .feed__buttons {
-      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1);
-    }
-  }
+  /* フィードの表示の調整 */
   .feed {
     box-shadow: none !important;
     border:1px solid var(--border-color-1) !important;
@@ -141,6 +229,8 @@
   }
   .feed__content {
     transform: translateY(-.2rem);
+    & .feed__title { font-size: 14px !important; }
+    & .feed__text  { font-size: 12px !important; }
   }
   .feed__text {
     color: var(--text-color-3) !important;
@@ -149,21 +239,44 @@
     margin-top: .4rem !important;
     gap: 6px !important;
     justify-content: center;
+      & .button--ss {
+        max-width:110px;
+        min-width:110px;
+        height: 24px;
+        line-height: 20px;
+        border-radius: 2px;
+      }
   }
 
   /* followボタン隙間調整 */
   .user-item:has(.button--follow) {
     gap: 6px !important;
     padding: .4rem .2rem 0 !important;
+      & .button--ss {
+        border-radius: 2px;
+      }
   }
 
   /* サムネの調整 */
   .timeline-image {
     border-radius: 2px !important;
   }
-
+  /* 画像枚数ごとにグリッドを調整 */
+  .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(2)) {
+    grid-template-columns: repeat(2,1fr); 
+  }
+  .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(3)) {
+    grid-template-columns: repeat(3,1fr); 
+  }
+  .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(4)) {
+    grid-template-columns: repeat(4,1fr); 
+  }
+  .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+    width: 100%;
+    max-height: 80px;
+  }
   .timeline-images-wrap:not(.timeline-image:only-child) .timeline-images.timeline-images--nocrop {
-      margin-left: auto;
+    margin-left: auto;
   }
 
   /* ラベル警告の調整 */
@@ -183,18 +296,19 @@
   :is(.deck-wrap,.single-wrap) .timeline-images-wrap:has(.timeline-image:only-child),
   .notifications-item-images:has(.timeline-image:only-child){
     /* 縦に長すぎるのは切る */
+    --timeline-images--nocrop-width: 100%;
     --timeline-images--nocrop-max-height: 12rem;
     max-height: var(--timeline-images--nocrop-max-height);
     overflow-y: hidden;
     position: relative;
     & .timeline-images.timeline-images--nocrop {
-      width: 50%;
+      width: var(--timeline-images--nocrop-width);
       margin-left: 0;
       /* 縦長切れてるグラデ */
       &::after {
         content: '';
         height: var(--timeline-images--nocrop-max-height);
-        width: 50%;
+      width: var(--timeline-images--nocrop-width);
         background: linear-gradient(rgba(0, 0, 0, 0), var(--bg-color-1) 1.5rem);
         position: absolute;
         z-index: 9;
@@ -284,7 +398,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  .timeline-external__image {
+  .timeline-external__image:not(:has(video.gif-video)) {
     aspect-ratio: 16 / 4 !important;
     overflow: hidden;
     background: rgb(0, 0, 0);
@@ -303,14 +417,18 @@
   .timeline-external--record .timeline-external__content {
     margin-left: 2px;
   }
-
+  /* X埋め込みの上マージン */
+  .timeline-twitter-external {
+    margin-top: .4rem;
+  }
   /* X埋め込みの上下を削る */
   .x-embed-wrap {
     border-radius:4px;
     overflow: hidden;
     & iframe{
       margin-top: -1rem;
-      margin-bottom: -6rem;
+      margin-bottom: -6.25rem;
+      width:calc(100% - var(--avatar-gap)) !important;
     }
   }
 
@@ -321,10 +439,13 @@
       padding-left: 4px;
     }
   }
+  .notifications-list {
+    clear: both;
+  }
   /* 通知カラムの新着通知を調整*/
   .notifications-list__new {
-    top: 10px;
-    right: 0px;
+    top: 10px !important;
+    right: 0px !important;
   }
   /* 通知カラムのフィルタ縦幅を調整 */
   .notifications-filter-display {
@@ -333,15 +454,39 @@
   }
 
   .notification-column {
-    --tokimini-grid-template-columns-left: 20px;
-    grid-template-columns: var(--tokimini-grid-template-columns-left) 1fr;
+    display: block;
   }
-
+  .notification-column__icons{
+    float:left;
+  }
+  .notification-column__content {
+    margin-left: .4rem
+  }
+  /* 通知欄のユーザーアイコンを重ねる */
   .notification-authors {
-    margin-bottom: 4px;
+    grid-template-columns: repeat(auto-fill,18px) !important;
+    margin-bottom: 4px !important;
+    transform: translateX(12px);
+  }
+  .notification-author {
+    margin-left: -12px;
+  }
+  .notification-author .avatar {
+    box-shadow: 0px  0px 0 2px var(--bg-color-1);
+    border-radius: 50%;  
   }
   .notifications-item__title {
     margin-bottom: 2px;
+  }
+  .notifications-item__content {
+    letter-spacing: -0.01rem;
+  }
+  /* 通知カラム内のフィードの調整 */
+  .notifications-item__feed {
+    & * {font-size: 95% !important;}
+    & .feed-creator-toggle {
+        height: 24px;
+    }
   }
 
   /* 通知カラム内の埋め込みリンク表示の調整 */
@@ -355,11 +500,11 @@
     margin-top: .2rem !important;
     /* 埋め込みリンクのラッパー */
     & > div {
-    border-radius: 2px !important;
+      border-radius: 2px !important;
     }
     /* 埋め込みリンクの画像 */
     & div:has(> img) {
-    aspect-ratio: 16 / 4 !important;
+      aspect-ratio: 16 / 4 !important;
     }
     /* 概要ブロック */
     & > div {
@@ -424,6 +569,21 @@
     }
   }
 
+  /* モーダルの高さを調整 */
+  .layout-decks .modal-page-content {
+       height: fit-content;
+       max-height: 94vh;
+  }
+  /* モーダル表示時の背景を暗く */
+  .layout-decks .modal-page {
+    background-color: #00000090;
+  }
+  .modal-page .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+    width: 100%;
+    max-height: 100%;
+    gap: 6px;
+  }
+
   /* シングルTLモード時 */
   .single-wrap {
     /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
@@ -444,6 +604,35 @@
 
   /* プロフィール表示時 */
   .profile {
+    .user-profile-wrap {
+      padding: 0;
+
+    }
+    .embla__container.svelte-16mbw1a {
+      gap: 0;
+    }
+    .profile-banner {
+      border-radius: 4px 0 0 4px;
+      margin-bottom: 0px;
+    }
+    .profile-grid__left {
+      border-radius: 0 0 4px 4px;
+    }
+    .profile-grid:has(.profile-grid__right) .profile-grid__left {
+      border-radius: 0 0 0 4px;
+    }
+
+    /* bio欄の改行を詰める */
+    .profile-description__text {
+      line-height: 1.5;
+    }
+    .profile-grid__right:before {
+      border-radius: 0px 4px 4px 0 ;
+    }
+    /* 固定のリプ元を非表示にする */
+    .deck-row__content .sticky-text ~ .timeline__column--reply {
+      display: none;
+    }
     /* リプ元のサイズを戻す */
     .timeline__column--reply {
       zoom: 1;
@@ -464,6 +653,10 @@
           content: none;
         }
       }
+    }
+    .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+      max-height: fit-content;
+      gap: 4px;
     }
     /* 埋め込みカードの大きさ */
     .timeline-external {
@@ -518,4 +711,27 @@
     filter: drop-shadow(0px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(0px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color));
     text-shadow: none;
   }
+  
+  /* 設定パネル */
+  .deck-settings-wrap {
+    /* 全体のpadding */
+    .deck-settings-content {
+      padding: 8px 12px;
+    }
+    /* 各項目の上下の間隔 */
+    .deck-settings-groups dl {
+      padding: 12px 0;
+    }
+    /* 各項目のタイトルの下の間隔 */
+    .settings-group__name {
+      margin-bottom: 6px;
+    }
+    /* セレクトBOXの高さ */
+    .form-select__select {
+      border-radius: var(--border-radius-2);
+      height: 36px;
+      padding: 0 12px;
+    }
+  }
 }
+
