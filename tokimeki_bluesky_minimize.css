@@ -7,7 +7,7 @@
 ==/UserStyle== */
 
 @-moz-document url-prefix("https://tokimeki.blue/") {
-  /* 絵文字をぺったらこくする */
+/* 絵文字をぺったらこくする */
   @font-face {
     font-family: MyFontFamily;
     src: local("Yu Gothic"),
@@ -140,7 +140,8 @@
   /* 返信先を小さく */
   .timeline__column--reply {
     zoom: 0.8;
-    & .timeline-images-wrap {
+    /* 画像が一枚のときは幅半分に */
+    & .timeline-images-wrap:has(.timeline-image:only-child), .notifications-item-images:has(.timeline-image:only-child) {
       width: 50%;
     }
   }
@@ -731,6 +732,18 @@
       border-radius: var(--border-radius-2);
       height: 36px;
       padding: 0 12px;
+    }
+  }
+
+  /* fedbird bridge アカウントの通知が赤くてびっくりするので調整(仮)  */  
+  .user-profile:has(.profile-description a[href*='brid.gy']) > .profile-reported {
+    color: var(--text-color-3);
+    border: none;
+    font-weight: 400;
+    border-radius: 2px;
+    margin-bottom: 0;
+    & svg > path {
+      fill: var(--timeline-reaction-reposted-icon-color);
     }
   }
 }
