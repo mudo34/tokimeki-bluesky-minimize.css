@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.1.4
+@version        1.1.5
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -232,16 +232,16 @@
         border-radius: 2px;
       }
       /* 画像枚数ごとにグリッドを調整 */
-      & .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(2)) {
-        grid-template-columns: repeat(2,1fr); 
+      &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(2)) {
+        grid-template-columns: repeat(2,1fr)
       }
-      & .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(3)) {
+      &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(3)) {
         grid-template-columns: repeat(3,1fr); 
       }
-      & .timeline-images--compact:has(.timeline-image:first-child:nth-last-child(4)) {
+      &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(4)) {
         grid-template-columns: repeat(4,1fr); 
       }
-      & .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+      &.timeline-images--compact:not(:has(.timeline-image:only-child)) {
         width: 100%;
         max-height: 80px;
       }
@@ -618,8 +618,11 @@
 
   /* モーダルの高さを調整 */
   .layout-decks .modal-page-content {
-       height: fit-content;
-       max-height: 94vh;
+    height: fit-content;
+    max-height: 94vh;
+    .end-filler:after {
+      content: none;
+    }
   }
   /* モーダル表示時の背景を暗く */
   .layout-decks .modal-page {
