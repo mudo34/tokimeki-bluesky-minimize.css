@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.1.5
+@version        1.1.6
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -712,6 +712,27 @@
       border-bottom: 1px solid var(--border-color-1);
       background: rgb(0, 0, 0);
       cursor: pointer;
+    }
+    /* 動画欄のレイアウト変更 */
+    .timeline--video .video-list {
+      grid-template-columns: repeat(2, 1fr);
+      & .video-item {
+        aspect-ratio: 1/1;
+      }
+      /* 視聴用モーダル */
+      .video-modal {
+        & .video-modal__slide {
+          width: 50vw;
+          /*height: 90vh;*/
+          & .embla__slide .video-modal-video {
+            height: 90vh;
+          }
+          & .video-timeline-nav .video-timeline-nav__item .timeline-reaction__wrap .timeline-reaction__item .timeline-reaction__icon {
+            top: 6px;
+            left: 1px;
+          }
+        }
+      }
     }
   }
 
