@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.1.7
+@version        1.1.8
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -258,7 +258,7 @@
   
   /* ラベル警告の調整 */
   @container timeline-item (width <=345px) {
-    .timeline-images-wrap:has(.timeline-warn) {
+    .timeline-images-wrap:has(.timeline-warn), .timeline-external-wrap:has(.timeline-warn) {
       margin-left: 0;
       & .timeline-warn,
       & .timeline-warn-hiding {
