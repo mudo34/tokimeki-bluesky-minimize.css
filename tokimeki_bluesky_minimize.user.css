@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.1.8
+@version        1.2
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -9,794 +9,845 @@
 ==/UserStyle==*/
 
 @-moz-document domain("tokimeki.blue") {
-  /*-------------------------
-  	  メインTLの調整
-  	-------------------------*/
-  .app .wrap {
-    --deck-border-radius: var(--border-radius-2);
+/*-------------------------
+    メインTLの調整
+  -------------------------*/
+.app .wrap {
+  --deck-border-radius: var(--border-radius-2);
+}
+
+/* コンパクト表示のアイコンをもっとコンパクトにする */
+.timeline__item--compact {
+  --avatar-size: 32px;
+  --avatar-gap: 6px;
+  padding: 6px 0;
+}
+
+.timeline__meta:not(:root) {
+  margin-bottom: 1px;
+}
+
+/* ハンドル表示小さく */
+.timeline__handle {
+  margin: -1px 0 -8px -1px;
+  font-size: 13px;
+}
+
+/* TL全体のpaddingを狭く */
+.timeline--default {
+  padding: 10px;
+}
+
+/* TLの投稿1件ごとのpaddingを狭く */
+.timeline__item {
+  padding: 10px 0px 4px 0px;
+}
+
+/* Reposted by～の行を狭く */
+.timeline-repost-message {
+  margin: -3px 0 6px -2px;
+  overflow: hidden;
+}
+
+/*  postごとのクリリンの位置調整 */
+.timeline-menu-toggle:not(:root) {
+  top: 4px;
+  right: -8px;
+  background-color: transparent;
+}
+
+/* 相互アイコンの調整 */
+.avatar-mutual-badge {
+  width: 16px;
+  height: 16px;
+  bottom: -6px;
+  right: -4px;
+  & svg {
+    width: 12px;
+    height: 12px;
   }
-  
-  /* コンパクト表示のアイコンをもっとコンパクトにする */
-  .timeline__item--compact {
-    --avatar-size: 32px;
-    --avatar-gap: 6px;
-    padding: 6px 0;
+}
+
+/* S幅以下 / TL本文の位置を調整 */
+@container timeline-item (width <=345px) {
+  .timeline__meta {
+    display: block;
+    & p {
+      height: calc(var(--avatar-size) / 2)
+    }
   }
-  
-  .timeline__meta:not(:root) {
-    margin-bottom: 1px;
+  .timeline__column:not(.timeline__column--reply) .timeline-warn-wrap {
+    margin-top: .5rem;
+    margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + .3rem);
   }
-  
-  /* ハンドル表示小さく */
-  .timeline__handle {
-    margin: -1px 0 -8px -1px;
-    font-size: 13px;
+  .timeline__column.timeline__column--reply {
+    & .timeline-warn-wrap {
+      margin-top: .5rem;
+      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
+    }
+    & .timeline-reaction {
+      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
+    }
   }
-  
-  /* TL全体のpaddingを狭く */
-  .timeline--default {
-    padding: 10px;
+  .notifications-item__title,
+  .notifications-item__content {
+    margin-left: calc((var(--tokimini-grid-template-columns-left)) * -1 + .1rem);
   }
-  
-  /* TLの投稿1件ごとのpaddingを狭く */
-  .timeline__item {
-    padding: 10px 0px 4px 0px;
+  .timeline-external,
+  .timeline-twitter-external,
+  .timeline-video-wrap,
+  .feed--embed,
+  .embed-poll {
+    margin-left: 0 !important;
   }
-  
-  /* Reposted by～の行を狭く */
-  .timeline-repost-message {
-    margin: -3px 0 6px -2px;
+}
+/* 投稿の調整 */
+.timeline__text {
+  line-height: 1.5;
+  letter-spacing: -0.01rem;
+}
+
+/* 投稿の画像枠 */
+.timeline-images-wrap {
+  margin-top: 4px;
+}
+
+/* TLのリアクションの行 */
+.timeline-reaction,
+.timeline__item--compact .timeline-reaction {
+  margin-top: 6px;
+}
+
+/* 返信先を小さく */
+.timeline__column--reply {
+  zoom: 0.8;
+  /* 画像が一枚のときは幅半分に */
+  & .timeline-images-wrap:has(.timeline-image: only-child), .notifications-item-images:has(.timeline-image:only-child) {
+    width: 50%;
+  }
+}
+/* 返信ラインの位置調整*/
+.timeline__item--compact .timeline__column--reply:before {
+  left: 0px;
+  width: 3px;
+  bottom: -40px;
+}
+/* 認証マークの位置を日付の横に移動 */
+.timeline__meta {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: auto auto auto;
+  column-gap: 0;
+  align-items: center;
+}
+.timeline__user {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  overflow-x: clip;
+}
+.timeline__date {
+  grid-column: 1;
+  grid-row: 2;
+  white-space: nowrap;
+}
+.timeline__verified {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  transform: translateX(.2rem) translateY(.21rem);
+}
+.timeline-translate-button {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  text-align: left;
+}
+
+.modal-page .timeline__verified,
+.profile .timeline__verified {
+  transform: translateX(.3rem) translateY(.025rem);
+}
+
+/* RT時のリプ元を非表示 */
+.timeline-repost-message + .timeline__column--reply {
+  display: none;
+}
+
+/* リプ表示時のケバブメニューの位置が直感的でないのを調整 */
+.timeline__item:has(.timeline__column--reply) {
+  display: grid;
+
+  & :last-of-type.timeline__column:not(.timeline__column--reply) {
+    grid-column: 1;
+    grid-row-end: 5;
+  }
+
+  & .timeline-menu-toggle {
+    grid-column: 1;
+    grid-row-end: 5;
+    position: relative;
+    left: 100%;
+  }
+  & .timeline-menu-toggle {
+    transform: translateX(-70%) translateY(-50%);
+  }
+  /* フィードは枠の分再調整 */
+  & .timeline-menu-toggle--feed {
+    position: absolute !important;
+    transform: translateX(-90%) translateY(-10%);
+  }
+}
+
+/* フィードの表示の調整 */
+.feed.feed--embed {
+  box-shadow: none;
+  border: 1px solid var(--border-color-1);
+  border-radius: 2px;
+
+  & .feed__column {
+    padding: .4rem;
+  }
+  & .feed__avatar {
+    border-radius: 2px;
+  }
+  & .feed__content {
+    transform: translateY(-.2rem);
+    & .feed__title {
+      font-size: 14px;
+    }
+    & .feed__text {
+      font-size: 12px;
+      color: var(--text-color-3);
+    }
+  }
+  & .feed__buttons {
+    margin-top: .4rem;
+    gap: 6px;
+    justify-content: center;
+    & .button--ss {
+      max-width: 110px;
+      min-width: 110px;
+      height: 24px;
+      line-height: 20px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/* サムネの調整 */
+.timeline-images-wrap:not(.timeline-image:only-child) .timeline-images.timeline-images--nocrop {
+  margin-left: auto;
+}
+.timeline-images {
+  & .timeline-image {
+    border-radius: 2px;
+  }
+  /* 画像枚数ごとにグリッドを調整 */
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(2)) {
+    grid-template-columns: repeat(2, 1fr)
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(3)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(4)) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(5)) {
+    grid-template-columns: repeat(6, 1fr);
+    & .timeline-image:nth-child(-n + 2) {
+      grid-column: span 3;
+    }
+    & .timeline-image:nth-child(n + 3) {
+      grid-column: span 2;
+    }
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(6)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(7)) {
+    grid-template-columns: repeat(6, 1fr);
+    & .timeline-image:nth-child(-n + 4) {
+      display: block;
+      grid-column: span 3;
+      aspect-ratio: 2/1;
+      & button {
+        height: unset;
+      }
+    }
+    & .timeline-image:nth-child(n + 5) {
+      grid-column: span 2;
+    }
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(9)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(10)) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    & .timeline-image:nth-child(-n + 4) {
+      display: block;
+      grid-column: span 3;
+      aspect-ratio: 2/1;
+      & button {
+        height: unset;
+      }
+    }
+    & .timeline-image:nth-child(n + 5) {
+      grid-column: span 2;
+    }
+  }
+  &.timeline-images--compact:not(:has(.timeline-image:only-child)) {
+    width: 100%;
+  }
+}
+
+/* ラベル警告の調整 */
+@container timeline-item (width <=345px) {
+  .timeline-images-wrap:has(.timeline-warn), .timeline-external-wrap:has(.timeline-warn) {
+    margin-left: 0;
+    & .timeline-warn,
+    & .timeline-warn-hiding {
+      margin-left: 0;
+    }
+  }
+}
+.timeline-images-wrap .timeline-warn,
+.timeline-images-wrap .timeline-warn-hiding {
+  border-radius: 2px;
+  padding: 4px 6px;
+  & .timeline-warn-info-button {
+    top: 2px;
+    right: 2px;
+  }
+}
+/* ラベル警告のinfo調整 他で使われているかどうか要確認*/
+.timeline-images-wrap dialog.v2-modal {
+  border-radius: 6px;
+  &.v2-modal--small {
+    width: 400px;
+  }
+  & .v2-modal__inner {
+    --v2-modal-heading-height: 48px;
+    & .modal-heading {
+      height: var(--v2-modal-heading-height);
+    }
+    & .modal-close-button {
+      width: var(--v2-modal-heading-height);
+      height: var(--v2-modal-heading-height);
+    }
+    & .v2-modal-contents {
+      padding: 12px 16px;
+    }
+    & .label-detail-list {
+      line-height: 1.5;
+    }
+  }
+}
+
+/* 切り取らないサムネの表示調整 */
+:is(.deck-wrap, .single-wrap) .timeline-images-wrap:has(.timeline-image:only-child),
+.notifications-item-images:has(.timeline-image:only-child) {
+  /* 縦に長すぎるのは切る */
+  --timeline-images--nocrop-width: 100%;
+  --timeline-images--nocrop-max-height: 12rem;
+  max-height: var(--timeline-images--nocrop-max-height);
+  overflow-y: hidden;
+  position: relative;
+  & .timeline-images.timeline-images--nocrop {
+    width: var(--timeline-images--nocrop-width);
+    margin-left: 0;
+    /* 縦長切れてるグラデ */
+    &::after {
+      content: '';
+      height: var(--timeline-images--nocrop-max-height);
+      width: var(--timeline-images--nocrop-width);
+      background: linear-gradient(rgba(0, 0, 0, 0), var(--bg-color-1) 1.5rem);
+      position: absolute;
+      z-index: 9;
+      top: calc(var(--timeline-images--nocrop-max-height) - 2rem);
+    }
+  }
+}
+
+/* 画像拡大時の操作メニューのドロシャを濃くして白背景でも見やすくする */
+.pswp__button,
+.pswp__counter {
+  --usercss-pswp-drop-shadow-blur: 2px;
+  --usercss-pswp-drop-shadow-color: rgba(0, 0, 0, 0.2);
+  filter: drop-shadow(0px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(0px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color));
+  text-shadow: none;
+}
+
+/* ヘッダ下の隙間を狭く */
+.timeline {
+  top: -16px;
+}
+
+/* リンクカードの大きさ */
+.timeline__item .timeline__column,
+.publish-upload .publish-quote.publish-quote--external {
+  & .timeline-external {
+    margin-top: .5rem;
+    padding: .2rem .4rem;
+    display: flex;
+    gap: 0;
+    flex-direction: column;
+    border: 1px solid var(--border-color-1);
+    border-radius: 4px;
+    overflow: hidden;
+    background: var(--bg-color-2);
+    box-sizing: border-box;
+    & .timeline-external {
+      padding: .2rem 0;
+    }
+  }
+  & .timeline-external__content {
+    zoom: .9;
+    padding-top: .2rem;
+  }
+  /* 埋め込みカードのタイトルなど */
+  & .timeline-external__title {
+    margin-top: .2rem;
+    line-height: 1.3;
+    -webkit-line-clamp: 1;
+  }
+  & .timeline-external__description {
+    color: var(--text-color-3);
+    font-size: 12px;
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
-  /*  postごとのクリリンの位置調整 */
-  .timeline-menu-toggle:not(:root) {
-    top: 4px;
-    right: -8px;
-    background-color: transparent;
+  & .timeline-external__image:not(:has(video.gif-video)) {
+    aspect-ratio: 16 / 4;
+    overflow: hidden;
+    background: rgb(0, 0, 0);
+    cursor: pointer;
   }
-  
-  /* 相互アイコンの調整 */
-  .avatar-mutual-badge {
-    width: 16px;
-    height: 16px;
-    bottom: -6px;
-    right: -4px;
-    & svg {
-      width: 12px;
-      height: 12px;
+  /* QRT用の引用アイコンを縮小 */
+  & .timeline-external__icon {
+    transform: scale(.6);
+    top: 0;
+    right: 0;
+  }
+  /* QRT用枠を上に詰める */
+  & .timeline-external--record {
+    margin-top: 0;
+  }
+  & .timeline-external--record .timeline-external__content {
+    margin-left: 2px;
+  }
+  /* X埋め込みの上マージン */
+  & .timeline-twitter-external {
+    margin-top: .4rem;
+  }
+  /* X埋め込みの上下を削る */
+  & .x-embed-wrap {
+    border-radius: 4px;
+    overflow: hidden;
+    & iframe {
+      margin-top: -1rem;
+      margin-bottom: -6.25rem;
+      width: calc(100% - var(--avatar-gap)) !important;
     }
   }
-  
-  /* S幅以下 / TL本文の位置を調整 */
-  @container timeline-item (width <=345px) {
-    .timeline__meta {
-      display: block;
-      & p {
-        height: calc(var(--avatar-size) / 2)
-      }
-    }
-    .timeline__column:not(.timeline__column--reply) .timeline-warn-wrap {
-      margin-top: .5rem;
-      margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + .3rem);
-    }
-    .timeline__column.timeline__column--reply {
-      & .timeline-warn-wrap {
-        margin-top: .5rem;
-        margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
-      }
-      & .timeline-reaction {
-        margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + 1rem);
-      }
-    }
-    .notifications-item__title,
-    .notifications-item__content {
-      margin-left: calc((var(--tokimini-grid-template-columns-left)) * -1 + .1rem);
-    }
-    .timeline-external,
-    .timeline-twitter-external,
-    .timeline-video-wrap,
-    .feed--embed,
-    .embed-poll {
-      margin-left: 0 !important;
+}
+
+/* DeckTLモード時 */
+.deck-wrap {
+  /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
+  & .timeline__column {
+    grid-template-columns: var(--avatar-size) 1fr;
+    gap: var(--avatar-gap);
+  }
+
+  /* 幅Medium以上は動画を小さく */
+  @container timeline-item (width > 345px) {
+    .timeline-video-wrap {
+      width: 75%;
     }
   }
-  /* 投稿の調整 */
-  .timeline__text {
-    line-height: 1.5;
-    letter-spacing: -0.01rem;
+
+  /*リアクションアイコンを縮小*/
+  & .timeline-reaction {
+    zoom: 0.9;
   }
-  
-  /* 投稿の画像枠 */
-  .timeline-images-wrap {
-    margin-top: 4px;
+
+  /* 複数画像を並べて表示時 */
+  & .timeline-images--compact {
+    gap: 4px;
   }
-  
-  /* TLのリアクションの行 */
-  .timeline-reaction,
-  .timeline__item--compact .timeline-reaction {
-    margin-top: 6px;
+}
+
+/* シングルTLモード時 */
+.wrap:has(.main .single-wrap) {
+  /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
+  & .timeline__column {
+    grid-template-columns: var(--avatar-size) 1fr;
+    gap: 8px;
+    margin-right: 1rem;
   }
-  
-  /* 返信先を小さく */
-  .timeline__column--reply {
-    zoom: 0.8;
-    /* 画像が一枚のときは幅半分に */
-    & .timeline-images-wrap:has(.timeline-image: only-child), .notifications-item-images:has(.timeline-image:only-child) {
-      width: 50%;
-    }
+  /* 動画小さく */
+  & .timeline-video-wrap {
+    width: 75%;
   }
-  /* 返信ラインの位置調整*/
-  .timeline__item--compact .timeline__column--reply:before {
-    left: 0px;
-    width: 3px;
-    bottom: -40px;
+
+  /* カラムアイコンの上下余白を減らす */
+  & .side-bar-button {
+    height: 40px;
   }
-  /* 認証マークの位置を日付の横に移動 */
-  .timeline__meta {
-    display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: auto auto auto;
-    column-gap: 0;
-    align-items: center;
+}
+
+/* フォロワー情報フロートの調整 */
+aside.profile-card:not(:root) {
+  padding: 20px 12px;
+  & .profile-card-description,
+  & .profile-relationship {
+    margin-bottom: 10px;
   }
-  .timeline__user {
-    grid-column: 1 / -1;
-    grid-row: 1;
-    overflow-x: clip;
+}
+
+/*-------------------------
+      通知カラムの調整
+  -------------------------*/
+/* 通知カラムの内幅を調整 */
+.timeline--notification {
+  padding: 0 8px 0 4px;
+  & .notifications-list__item:has( .timeline__item) {
+    padding-left: 4px;
   }
-  .timeline__date {
-    grid-column: 1;
-    grid-row: 2;
-    white-space: nowrap;
-  }
-  .timeline__verified {
-    grid-column: 2;
-    grid-row: 2;
-    align-self: center;
-    transform: translateX(.2rem) translateY(.21rem);
-  }
-  .timeline-translate-button {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    text-align: left;
-  }
-  
-  .modal-page .timeline__verified,
-  .profile .timeline__verified {
-    transform: translateX(.3rem) translateY(.025rem);
-  }
-  
-  /* RT時のリプ元を非表示 */
-  .timeline-repost-message + .timeline__column--reply {
+  /* 通知カラムの本文なし画像ありpostの空行を非表示 */
+  & .notifications-item__content:has(a:empty) {
     display: none;
   }
-  
-  /* リプ表示時のケバブメニューの位置が直感的でないのを調整 */
-  .timeline__item:has(.timeline__column--reply) {
-    display: grid;
-  
-    & :last-of-type.timeline__column:not(.timeline__column--reply) {
-      grid-column: 1;
-      grid-row-end: 5;
-    }
-  
-    & .timeline-menu-toggle {
-      grid-column: 1;
-      grid-row-end: 5;
-      position: relative;
-      left: 100%;
-    }
-    & .timeline-menu-toggle {
-      transform: translateX(-70%) translateY(-50%);
-    }
-    /* フィードは枠の分再調整 */
-    & .timeline-menu-toggle--feed {
-      position: absolute !important;
-      transform: translateX(-90%) translateY(-10%);
-    }
+}
+.notifications-list {
+  clear: both;
+}
+/* 通知カラムの新着通知を調整
+       ●のままだとどこに置いても据わり悪かったので三角に変更 */
+.notifications-list__item .notifications-list__new {
+  background-color: transparent;
+  width: 0;
+  height: 0;
+  left: -4px;
+  top: 0;
+  border-radius: 0;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--primary-color) transparent transparent var(--primary-color);
+}
+/* 通知カラムのフィルタ縦幅を調整 */
+.notifications-filter-display:not(:root) {
+  margin: 0 0 16px;
+  padding: 8px;
+}
+
+.notification-column {
+  display: block;
+}
+.notification-column__icons {
+  float: left;
+}
+.notification-column__content {
+  margin-left: .4rem
+}
+/* 通知欄のユーザーアイコンを重ねる */
+.notification-authors:not(:root) {
+  grid-template-columns: repeat(auto-fill, 18px);
+  margin-bottom: 4px;
+  transform: translateX(12px);
+}
+.notification-author {
+  margin-left: -12px;
+}
+.notification-author .avatar {
+  box-shadow: 0px 0px 0 2px var(--bg-color-1);
+  border-radius: 50%;
+}
+.notifications-item__title {
+  margin-bottom: 2px;
+}
+.notifications-item__content {
+  letter-spacing: -0.01rem;
+}
+/* 通知カラム内のフィードの調整 */
+.notifications-item__feed:not(:root) {
+  & * {
+    font-size: 95%;
   }
-  
-  /* フィードの表示の調整 */
-  .feed.feed--embed {
-    box-shadow: none;
-    border: 1px solid var(--border-color-1);
+  & .feed-creator-toggle {
+    height: 24px;
+  }
+}
+/* followボタン隙間調整
+       実質unfollowボタンの方がデカいのちょっと謎なのでフォントサイズ以外同一に */
+aside.profile-card:not(:root) .profile-card-button,
+.notifications-item__buttons .user-item.user-item--notification {
+  gap: 6px;
+  padding: .4rem .2rem 0;
+  & .button.button--sm.button--following,
+  & .button.button--follow {
     border-radius: 2px;
-  
-    & .feed__column {
-      padding: .4rem;
+    min-width: 100px;
+    height: 30px;
+    padding: 0 8px;
+  }
+}
+
+/* いいねを☆にしてるときの色をハートと合わせる */
+.superstar {
+  --timeline-reaction-liked-icon-color: var(--primary-color) !important;
+}
+
+/* 通知ページの */
+/* いいね通知アイコン */
+.notification-icon--like {
+  /* 線のみに変更 */
+  background-color: transparent;
+  & svg {
+    stroke: var(--text-color-3);
+  }
+}
+
+/* リポスト通知アイコン */
+.notification-icon--repost {
+  /* 線のみに変更 */
+  background-color: transparent;
+  & svg {
+    stroke: var(--text-color-3);
+  }
+}
+
+/*-------------------------
+      投稿欄の調整
+  -------------------------*/
+/* 投稿欄の調整 */
+@media (min-width: 768px) {
+  .publish-group.publish-group--left .publish-wrap {
+    padding: 4px 8px;
+  }
+  .publish-quote.publish-quote--reply {
+    padding: 12px 8px;
+  }
+  .publish-form .editor-column {
+    padding: 12px 8px;
+  }
+}
+/* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
+.publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
+  & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    zoom: .5;
+    border-radius: 50%;
+  }
+  & .timeline-external:not(:has(.timeline-external-avatar)) {
+    padding: 0;
+    display: grid;
+    grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
+    border: 0;
+    & .timeline__meta {
+      margin: 0 .2rem;
     }
-    & .feed__avatar {
-      border-radius: 2px;
+    & .timeline-external__content {
+      zoom: 1;
     }
-    & .feed__content {
-      transform: translateY(-.2rem);
-      & .feed__title {
-        font-size: 14px;
-      }
-      & .feed__text {
-        font-size: 12px;
-        color: var(--text-color-3);
-      }
+    & .timeline-external__description {
+      margin-left: .2rem;
     }
-    & .feed__buttons {
-      margin-top: .4rem;
-      gap: 6px;
-      justify-content: center;
-      & .button--ss {
-        max-width: 110px;
-        min-width: 110px;
-        height: 24px;
-        line-height: 20px;
-        border-radius: 2px;
-      }
+    & .timeline-external--record-publish:before {
+      left: 12px;
     }
   }
-  
-  /* サムネの調整 */
-  .timeline-images-wrap:not(.timeline-image:only-child) .timeline-images.timeline-images--nocrop {
-    margin-left: auto;
+}
+
+/*-------------------------
+      メディア欄の調整
+  -------------------------*/
+/* メディア欄 */
+.timeline.timeline--media .media-list {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+  & .media-item {
+    overflow: visible;
+    aspect-ratio: 16 / 9;
   }
-  .timeline-images {
-    & .timeline-image {
-      border-radius: 2px;
-    }
-    /* 画像枚数ごとにグリッドを調整 */
-    &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(2)) {
-      grid-template-columns: repeat(2, 1fr)
-    }
-    &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(3)) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    &.timeline-images--compact:has(.timeline-image:first-child:nth-last-child(4)) {
-      grid-template-columns: repeat(4, 1fr);
-    }
-    &.timeline-images--compact:not(:has(.timeline-image:only-child)) {
+}
+
+/* モーダルの高さを調整 */
+.layout-decks .modal-page-content {
+  height: fit-content;
+  max-height: 94vh;
+  .end-filler:after {
+    content: none;
+  }
+}
+/* モーダル表示時の背景を暗く */
+.layout-decks .modal-page {
+  background-color: #00000090;
+}
+.modal-page .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+  width: 100%;
+  max-height: 100%;
+  gap: 6px;
+}
+
+/*-------------------------
+     プロフィール表示時の調整 
+  -------------------------*/
+/* プロフィール表示時 */
+.profile {
+  & .user-profile-wrap {
+    padding: 0;
+  }
+  & .embla__container.svelte-16mbw1a {
+    gap: 0;
+  }
+  & .profile-banner {
+    border-radius: 4px 0 0 4px;
+    margin-bottom: 0px;
+  }
+  & .profile-grid__left {
+    border-radius: 0 0 4px 4px;
+  }
+  & .profile-grid:has(.profile-grid__right) .profile-grid__left {
+    border-radius: 0 0 0 4px;
+  }
+
+  /* bio欄の改行を詰める */
+  & .profile-description__text {
+    line-height: 1.5;
+  }
+  & .profile-grid__right:before {
+    border-radius: 0px 4px 4px 0;
+  }
+  /* 固定のリプ元を非表示にする */
+  & .deck-row__content .sticky-text ~ .timeline__column--reply {
+    display: none;
+  }
+  /* リプ元のサイズを戻す */
+  & .timeline__column--reply {
+    zoom: 1;
+    & .timeline-images-wrap {
       width: 100%;
     }
   }
-  
-  /* ラベル警告の調整 */
-  @container timeline-item (width <=345px) {
-    .timeline-images-wrap:has(.timeline-warn), .timeline-external-wrap:has(.timeline-warn) {
-      margin-left: 0;
-      & .timeline-warn,
-      & .timeline-warn-hiding {
-        margin-left: 0;
-      }
-    }
-  }
-  .timeline-images-wrap .timeline-warn,
-  .timeline-images-wrap .timeline-warn-hiding {
-    border-radius: 2px;
-    padding: 4px 6px;
-    & .timeline-warn-info-button {
-      top: 2px;
-      right: 2px;
-    }
-  }
-  /* ラベル警告のinfo調整 他で使われているかどうか要確認*/
-  .timeline-images-wrap dialog.v2-modal {
-    border-radius: 6px;
-    &.v2-modal--small {
-      width: 400px;
-    }
-    & .v2-modal__inner {
-      --v2-modal-heading-height: 48px;
-      & .modal-heading {
-        height: var(--v2-modal-heading-height);
-      }
-      & .modal-close-button {
-        width: var(--v2-modal-heading-height);
-        height: var(--v2-modal-heading-height);
-      }
-      & .v2-modal-contents {
-        padding: 12px 16px;
-      }
-      & .label-detail-list {
-        line-height: 1.5;
-      }
-    }
-  }
-  
-  /* 切り取らないサムネの表示調整 */
-  :is(.deck-wrap, .single-wrap) .timeline-images-wrap:has(.timeline-image:only-child),
-  .notifications-item-images:has(.timeline-image:only-child) {
-    /* 縦に長すぎるのは切る */
-    --timeline-images--nocrop-width: 100%;
-    --timeline-images--nocrop-max-height: 12rem;
-    max-height: var(--timeline-images--nocrop-max-height);
-    overflow-y: hidden;
-    position: relative;
+  /* 縦長画像カットを戻して1枚画像をフル表示する */
+  & .timeline-images-wrap:has(.timeline-image:only-child) {
+    max-height: unset;
+    overflow-y: visible;
     & .timeline-images.timeline-images--nocrop {
-      width: var(--timeline-images--nocrop-width);
-      margin-left: 0;
-      /* 縦長切れてるグラデ */
+      margin-left: auto;
+      margin-right: auto;
+      width: max-content;
+      max-width: 100%;
       &::after {
-        content: '';
-        height: var(--timeline-images--nocrop-max-height);
-        width: var(--timeline-images--nocrop-width);
-        background: linear-gradient(rgba(0, 0, 0, 0), var(--bg-color-1) 1.5rem);
-        position: absolute;
-        z-index: 9;
-        top: calc(var(--timeline-images--nocrop-max-height) - 2rem);
+        content: none;
       }
     }
   }
-  
-  /* 画像拡大時の操作メニューのドロシャを濃くして白背景でも見やすくする */
-  .pswp__button,
-  .pswp__counter {
-    --usercss-pswp-drop-shadow-blur: 2px;
-    --usercss-pswp-drop-shadow-color: rgba(0, 0, 0, 0.2);
-    filter: drop-shadow(0px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(0px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color));
-    text-shadow: none;
-  }
-  
-  /* ヘッダ下の隙間を狭く */
-  .timeline {
-    top: -16px;
-  }
-  
-  /* リンクカードの大きさ */
-  .timeline__item .timeline__column,
-  .publish-upload .publish-quote.publish-quote--external {
-    & .timeline-external {
-      margin-top: .5rem;
-      padding: .2rem .4rem;
-      display: flex;
-      gap: 0;
-      flex-direction: column;
-      border: 1px solid var(--border-color-1);
-      border-radius: 4px;
-      overflow: hidden;
-      background: var(--bg-color-2);
-      box-sizing: border-box;
-      & .timeline-external {
-        padding: .2rem 0;
-      }
-    }
-    & .timeline-external__content {
-      zoom: .9;
-      padding-top: .2rem;
-    }
-    /* 埋め込みカードのタイトルなど */
-    & .timeline-external__title {
-      margin-top: .2rem;
-      line-height: 1.3;
-      -webkit-line-clamp: 1;
-    }
-    & .timeline-external__description {
-      color: var(--text-color-3);
-      font-size: 12px;
-      margin-top: 4px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    & .timeline-external__image:not(:has(video.gif-video)) {
-      aspect-ratio: 16 / 4;
-      overflow: hidden;
-      background: rgb(0, 0, 0);
-      cursor: pointer;
-    }
-    /* QRT用の引用アイコンを縮小 */
-    & .timeline-external__icon {
-      transform: scale(.6);
-      top: 0;
-      right: 0;
-    }
-    /* QRT用枠を上に詰める */
-    & .timeline-external--record {
-      margin-top: 0;
-    }
-    & .timeline-external--record .timeline-external__content {
-      margin-left: 2px;
-    }
-    /* X埋め込みの上マージン */
-    & .timeline-twitter-external {
-      margin-top: .4rem;
-    }
-    /* X埋め込みの上下を削る */
-    & .x-embed-wrap {
-      border-radius: 4px;
-      overflow: hidden;
-      & iframe {
-        margin-top: -1rem;
-        margin-bottom: -6.25rem;
-        width: calc(100% - var(--avatar-gap)) !important;
-      }
-    }
-  }
-  
-  /* DeckTLモード時 */
-  .deck-wrap {
-    /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
-    & .timeline__column {
-      grid-template-columns: var(--avatar-size) 1fr;
-      gap: var(--avatar-gap);
-    }
-  
-    /* 幅Medium以上は動画を小さく */
-    @container timeline-item (width > 345px) {
-      .timeline-video-wrap {
-        width: 75%;
-      }
-    }
-  
-    /*リアクションアイコンを縮小*/
-    & .timeline-reaction {
-      zoom: 0.9;
-    }
-  
-    /* 複数画像を並べて表示時 */
-    & .timeline-images--compact {
-      gap: 4px;
-    }
-  }
-  
-  /* シングルTLモード時 */
-  .wrap:has(.main .single-wrap) {
-    /* TL上のアイコンを小さく・アイコンと本文の隙間を狭く */
-    & .timeline__column {
-      grid-template-columns: var(--avatar-size) 1fr;
-      gap: 8px;
-      margin-right: 1rem;
-    }
-    /* 動画小さく */
-    & .timeline-video-wrap {
-      width: 75%;
-    }
-  
-    /* カラムアイコンの上下余白を減らす */
-    & .side-bar-button {
-      height: 40px;
-    }
-  }
-  
-  /* フォロワー情報フロートの調整 */
-  aside.profile-card:not(:root) {
-    padding: 20px 12px;
-    & .profile-card-description,
-    & .profile-relationship {
-      margin-bottom: 10px;
-    }
-  }
-  
-  /*-------------------------
-  	    通知カラムの調整
-  	-------------------------*/
-  /* 通知カラムの内幅を調整 */
-  .timeline--notification {
-    padding: 0 8px 0 4px;
-    & .notifications-list__item:has( .timeline__item) {
-      padding-left: 4px;
-    }
-    /* 通知カラムの本文なし画像ありpostの空行を非表示 */
-    & .notifications-item__content:has(a:empty) {
-      display: none;
-    }
-  }
-  .notifications-list {
-    clear: both;
-  }
-  /* 通知カラムの新着通知を調整
-  	     ●のままだとどこに置いても据わり悪かったので三角に変更 */
-  .notifications-list__item .notifications-list__new {
-    background-color: transparent;
-    width: 0;
-    height: 0;
-    left: -4px;
-    top: 0;
-    border-radius: 0;
-    border-width: 6px;
-    border-style: solid;
-    border-color: var(--primary-color) transparent transparent var(--primary-color);
-  }
-  /* 通知カラムのフィルタ縦幅を調整 */
-  .notifications-filter-display:not(:root) {
-    margin: 0 0 16px;
-    padding: 8px;
-  }
-  
-  .notification-column {
-    display: block;
-  }
-  .notification-column__icons {
-    float: left;
-  }
-  .notification-column__content {
-    margin-left: .4rem
-  }
-  /* 通知欄のユーザーアイコンを重ねる */
-  .notification-authors:not(:root) {
-    grid-template-columns: repeat(auto-fill, 18px);
-    margin-bottom: 4px;
-    transform: translateX(12px);
-  }
-  .notification-author {
-    margin-left: -12px;
-  }
-  .notification-author .avatar {
-    box-shadow: 0px 0px 0 2px var(--bg-color-1);
-    border-radius: 50%;
-  }
-  .notifications-item__title {
-    margin-bottom: 2px;
-  }
-  .notifications-item__content {
-    letter-spacing: -0.01rem;
-  }
-  /* 通知カラム内のフィードの調整 */
-  .notifications-item__feed:not(:root) {
-    & * {
-      font-size: 95%;
-    }
-    & .feed-creator-toggle {
-      height: 24px;
-    }
-  }
-  /* followボタン隙間調整
-  	     実質unfollowボタンの方がデカいのちょっと謎なのでフォントサイズ以外同一に */
-  aside.profile-card:not(:root) .profile-card-button,
-  .notifications-item__buttons .user-item.user-item--notification {
-    gap: 6px;
-    padding: .4rem .2rem 0;
-    & .button.button--sm.button--following,
-    & .button.button--follow {
-      border-radius: 2px;
-      min-width: 100px;
-      height: 30px;
-      padding: 0 8px;
-    }
-  }
-  
-  /* いいねを☆にしてるときの色をハートと合わせる */
-  .superstar {
-    --timeline-reaction-liked-icon-color: var(--primary-color) !important;
-  }
-  
-  /* 通知ページの */
-  /* いいね通知アイコン */
-  .notification-icon--like {
-    /* 線のみに変更 */
-    background-color: transparent;
-    & svg {
-      stroke: var(--text-color-3);
-    }
-  }
-  
-  /* リポスト通知アイコン */
-  .notification-icon--repost {
-    /* 線のみに変更 */
-    background-color: transparent;
-    & svg {
-      stroke: var(--text-color-3);
-    }
-  }
-  
-  /*-------------------------
-  	    投稿欄の調整
-  	-------------------------*/
-  /* 投稿欄の調整 */
-  @media (min-width: 768px) {
-    .publish-group.publish-group--left .publish-wrap {
-      padding: 4px 8px;
-    }
-    .publish-quote.publish-quote--reply {
-      padding: 12px 8px;
-    }
-    .publish-form .editor-column {
-      padding: 12px 8px;
-    }
-  }
-  /* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
-  .publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
-    & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
-      width: var(--avatar-size);
-      height: var(--avatar-size);
-      zoom: .5;
-      border-radius: 50%;
-    }
-    & .timeline-external:not(:has(.timeline-external-avatar)) {
-      padding: 0;
-      display: grid;
-      grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
-      border: 0;
-      & .timeline__meta {
-        margin: 0 .2rem;
-      }
-      & .timeline-external__content {
-        zoom: 1;
-      }
-      & .timeline-external__description {
-        margin-left: .2rem;
-      }
-      & .timeline-external--record-publish:before {
-        left: 12px;
-      }
-    }
-  }
-  
-  /*-------------------------
-  	    メディア欄の調整
-  	-------------------------*/
-  /* メディア欄 */
-  .timeline.timeline--media .media-list {
-    grid-template-columns: repeat(2, 1fr);
+  .timeline-images--compact:not(:has(.timeline-image:only-child)) {
+    max-height: fit-content;
     gap: 4px;
-    & .media-item {
-      overflow: visible;
-      aspect-ratio: 16 / 9;
+  }
+  /* 埋め込みカードの大きさ */
+  .timeline-external {
+    margin-top: .5rem;
+    border: 1px solid var(--border-color-1);
+    border-radius: 4px;
+    & .timeline-external {
+      padding: .2rem 0;
     }
   }
-  
-  /* モーダルの高さを調整 */
-  .layout-decks .modal-page-content {
-    height: fit-content;
-    max-height: 94vh;
-    .end-filler:after {
-      content: none;
-    }
+  /* 埋め込みカードのタイトルなど */
+  .timeline-external__title {
+    margin-top: .2rem;
+    line-height: 1.3;
   }
-  /* モーダル表示時の背景を暗く */
-  .layout-decks .modal-page {
-    background-color: #00000090;
+  .timeline-external__image {
+    border-bottom: 1px solid var(--border-color-1);
+    background: rgb(0, 0, 0);
+    cursor: pointer;
   }
-  .modal-page .timeline-images--compact:not(:has(.timeline-image:only-child)) {
-    width: 100%;
-    max-height: 100%;
-    gap: 6px;
-  }
-  
-  /*-------------------------
-  	   プロフィール表示時の調整 
-  	-------------------------*/
-  /* プロフィール表示時 */
-  .profile {
-    & .user-profile-wrap {
-      padding: 0;
+  /* 動画欄のレイアウト変更 */
+  .timeline--video .video-list {
+    grid-template-columns: repeat(2, 1fr);
+    & .video-item {
+      aspect-ratio: 1/1;
     }
-    & .embla__container.svelte-16mbw1a {
-      gap: 0;
-    }
-    & .profile-banner {
-      border-radius: 4px 0 0 4px;
-      margin-bottom: 0px;
-    }
-    & .profile-grid__left {
-      border-radius: 0 0 4px 4px;
-    }
-    & .profile-grid:has(.profile-grid__right) .profile-grid__left {
-      border-radius: 0 0 0 4px;
-    }
-  
-    /* bio欄の改行を詰める */
-    & .profile-description__text {
-      line-height: 1.5;
-    }
-    & .profile-grid__right:before {
-      border-radius: 0px 4px 4px 0;
-    }
-    /* 固定のリプ元を非表示にする */
-    & .deck-row__content .sticky-text ~ .timeline__column--reply {
-      display: none;
-    }
-    /* リプ元のサイズを戻す */
-    & .timeline__column--reply {
-      zoom: 1;
-      & .timeline-images-wrap {
-        width: 100%;
-      }
-    }
-    /* 縦長画像カットを戻して1枚画像をフル表示する */
-    & .timeline-images-wrap:has(.timeline-image:only-child) {
-      max-height: unset;
-      overflow-y: visible;
-      & .timeline-images.timeline-images--nocrop {
-        margin-left: auto;
-        margin-right: auto;
-        width: max-content;
-        max-width: 100%;
-        &::after {
-          content: none;
+    /* 視聴用モーダル */
+    .video-modal {
+      & .video-modal__slide {
+        width: 50vw;
+        /*height: 90vh;*/
+        & .embla__slide .video-modal-video {
+          height: 90vh;
         }
-      }
-    }
-    .timeline-images--compact:not(:has(.timeline-image:only-child)) {
-      max-height: fit-content;
-      gap: 4px;
-    }
-    /* 埋め込みカードの大きさ */
-    .timeline-external {
-      margin-top: .5rem;
-      border: 1px solid var(--border-color-1);
-      border-radius: 4px;
-      & .timeline-external {
-        padding: .2rem 0;
-      }
-    }
-    /* 埋め込みカードのタイトルなど */
-    .timeline-external__title {
-      margin-top: .2rem;
-      line-height: 1.3;
-    }
-    .timeline-external__image {
-      border-bottom: 1px solid var(--border-color-1);
-      background: rgb(0, 0, 0);
-      cursor: pointer;
-    }
-    /* 動画欄のレイアウト変更 */
-    .timeline--video .video-list {
-      grid-template-columns: repeat(2, 1fr);
-      & .video-item {
-        aspect-ratio: 1/1;
-      }
-      /* 視聴用モーダル */
-      .video-modal {
-        & .video-modal__slide {
-          width: 50vw;
-          /*height: 90vh;*/
-          & .embla__slide .video-modal-video {
-            height: 90vh;
-          }
-          & .video-timeline-nav .video-timeline-nav__item .timeline-reaction__wrap .timeline-reaction__item .timeline-reaction__icon {
-            top: 6px;
-            left: 1px;
-          }
+        & .video-timeline-nav .video-timeline-nav__item .timeline-reaction__wrap .timeline-reaction__item .timeline-reaction__icon {
+          top: 6px;
+          left: 1px;
         }
       }
     }
   }
-  
-  
-  /* fedbird bridge アカウントの通知が赤くてびっくりするので調整(仮)  */
-  .user-profile:has(.profile-description a[href*='brid.gy']) > .profile-reported {
-    color: var(--text-color-3);
-    border: none;
-    font-weight: 400;
-    border-radius: 2px;
-    margin-bottom: 0;
-    & svg > path {
-      fill: var(--timeline-reaction-reposted-icon-color);
-    }
+}
+
+
+/*-------------------------
+     Reposted by ～時のプロフィールカードの調整
+  -------------------------*/
+.timeline-repost-message .button--following {
+  color: var(--base-bg-color);
+}
+
+/* fedbird bridge アカウントの通知が赤くてびっくりするので調整(仮)  */
+.user-profile:has(.profile-description a[href*='brid.gy']) > .profile-reported {
+  color: var(--text-color-3);
+  border: none;
+  font-weight: 400;
+  border-radius: 2px;
+  margin-bottom: 0;
+  & svg > path {
+    fill: var(--timeline-reaction-reposted-icon-color);
   }
-  
-  /*-------------------------
-  	    設定パネルの調整
-  	-------------------------*/
-  /* 設定パネル */
-  .deck-settings-wrap {
-    /* 全体のpadding */
-    .deck-settings-content {
-      padding: 8px 12px;
-    }
-    /* 各項目の上下の間隔 */
-    .deck-settings-groups dl {
-      padding: 12px 0;
-    }
-    /* 各項目のタイトルの下の間隔 */
-    .settings-group__name {
-      margin-bottom: 6px;
-    }
-    /* セレクトBOXの高さ */
-    .form-select__select {
-      border-radius: var(--border-radius-2);
-      height: 36px;
-      padding: 0 12px;
-    }
+}
+
+/*-------------------------
+      設定パネルの調整
+  -------------------------*/
+/* 設定パネル */
+.deck-settings-wrap {
+  /* 全体のpadding */
+  .deck-settings-content {
+    padding: 8px 12px;
   }
-  
-  /*-------------------------
-  	   全体の調整 
-  	-------------------------*/
-  /* サイドバーナビ動くな */
-  .side-nav {
-    position: absolute;
-    left: .55rem;
-    bottom: 4.25rem;
-    flex-direction: column !important;
-    gap: 8px !important;
+  /* 各項目の上下の間隔 */
+  .deck-settings-groups dl {
+    padding: 12px 0;
   }
+  /* 各項目のタイトルの下の間隔 */
+  .settings-group__name {
+    margin-bottom: 6px;
+  }
+  /* セレクトBOXの高さ */
+  .form-select__select {
+    border-radius: var(--border-radius-2);
+    height: 36px;
+    padding: 0 12px;
+  }
+}
+
+/*-------------------------
+     全体の調整 
+  -------------------------*/
+/* サイドバーナビ動くな */
+.side-nav {
+  position: absolute;
+  left: .55rem;
+  bottom: 4.25rem;
+  flex-direction: column !important;
+  gap: 8px !important;
+}
 }
