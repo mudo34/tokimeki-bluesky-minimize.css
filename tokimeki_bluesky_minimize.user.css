@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.1
+@version        1.2.2
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -351,7 +351,7 @@
   --timeline-images--nocrop-width: 100%;
   --timeline-images--nocrop-max-height: 12rem;
   max-height: var(--timeline-images--nocrop-max-height);
-  overflow-y: hidden;
+  overflow-y: clip;
   position: relative;
   & .timeline-images.timeline-images--nocrop {
     width: var(--timeline-images--nocrop-width);
@@ -855,7 +855,8 @@ aside.profile-card:not(:root) .profile-card-button,
 
 /*-------------------------
      2026.06.28アプデで画像拡大時のナビが見えなくなったバグへの対処(chrome)
-  -------------------------*/
+     - 2026.07.05 修正確認
+     
 .pswp__button{
   & > [color="#fff"]::after {
     content:'';
@@ -887,4 +888,5 @@ aside.profile-card:not(:root) .profile-card-button,
     }
   }
 }
+*/
 }
