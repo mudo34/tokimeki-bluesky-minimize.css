@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.2
+@version        1.2.3
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -68,6 +68,14 @@
   }
 }
 
+button:not([class*='avatar']) {
+  border-radius: 2px !important;
+}
+  
+dialog.v2-modal:not(:root) {
+  border-radius: 6px;
+}
+
 /* S幅以下 / TL本文の位置を調整 */
 @container timeline-item (width <=345px) {
   .timeline__meta {
@@ -100,6 +108,23 @@
   .embed-poll,
   .timeline-audio-wrap{
     margin-left: 0 !important;
+  }
+  /* リスト埋め込み */
+  .timeline-warn-wrap .list-item {
+    grid-template-columns: 32px 1fr;
+    padding: 8px 4px;
+    & .list-item__description {
+      font-size: 12px;
+      margin-top: 4px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    & .list-item__buttons {
+      margin-top: 0;
+      grid-column: 2;
+    }
   }
 }
 /* 投稿の調整 */
@@ -189,7 +214,7 @@
     left: 100%;
   }
   & .timeline-menu-toggle {
-    transform: translateX(-70%) translateY(-50%);
+    transform: translateX(-70%) translateY(-35%);
   }
   /* フィードは枠の分再調整 */
   & .timeline-menu-toggle--feed {
@@ -231,6 +256,10 @@
       line-height: 20px;
       border-radius: 2px;
     }
+  }
+  & .timeline-menu-toggle:not(:root) {
+    top: 0px;
+    right: -4px;
   }
 }
 
@@ -369,15 +398,6 @@
   }
 }
 
-/* 画像拡大時の操作メニューのドロシャを濃くして白背景でも見やすくする */
-.pswp__button,
-.pswp__counter {
-  --usercss-pswp-drop-shadow-blur: 2px;
-  --usercss-pswp-drop-shadow-color: rgba(0, 0, 0, 0.2);
-  filter: drop-shadow(0px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(0px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 0px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px 1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color)) drop-shadow(-1px -1px var(--usercss-pswp-drop-shadow-blur) var(--usercss-pswp-drop-shadow-color));
-  text-shadow: none;
-}
-
 /* ヘッダ下の隙間を狭く */
 .timeline {
   top: -16px;
@@ -512,158 +532,172 @@ aside.profile-card:not(:root) {
 /*-------------------------
       通知カラムの調整
   -------------------------*/
-/* 通知カラムの内幅を調整 */
-.timeline--notification {
-  padding: 0 8px 0 4px;
-  & .notifications-list__item:has( .timeline__item) {
-    padding-left: 4px;
+  /* 通知カラムの内幅を調整 */
+  .timeline--notification {
+    padding: 0 8px 0 4px;
+    & .notifications-list__item:has( .timeline__item) {
+      padding-left: 4px;
+    }
+    /* 通知カラムの本文なし画像ありpostの空行を非表示 */
+    & .notifications-item__content:has(a:empty) {
+      display: none;
+    }
   }
-  /* 通知カラムの本文なし画像ありpostの空行を非表示 */
-  & .notifications-item__content:has(a:empty) {
-    display: none;
+  .notifications-list {
+    clear: both;
   }
-}
-.notifications-list {
-  clear: both;
-}
-/* 通知カラムの新着通知を調整
-       ●のままだとどこに置いても据わり悪かったので三角に変更 */
-.notifications-list__item .notifications-list__new {
-  background-color: transparent;
-  width: 0;
-  height: 0;
-  left: -4px;
-  top: 0;
-  border-radius: 0;
-  border-width: 6px;
-  border-style: solid;
-  border-color: var(--primary-color) transparent transparent var(--primary-color);
-}
-/* 通知カラムのフィルタ縦幅を調整 */
-.notifications-filter-display:not(:root) {
-  margin: 0 0 16px;
-  padding: 8px;
-}
+  /* 通知カラムの新着通知を調整
+         ●のままだとどこに置いても据わり悪かったので三角に変更 */
+  .notifications-list__item .notifications-list__new {
+    background-color: transparent;
+    width: 0;
+    height: 0;
+    left: -4px;
+    top: 0;
+    border-radius: 0;
+    border-width: 6px;
+    border-style: solid;
+    border-color: var(--primary-color) transparent transparent var(--primary-color);
+  }
+  /* 通知カラムのフィルタ縦幅を調整 */
+  .notifications-filter-display:not(:root) {
+    margin: 0 0 16px;
+    padding: 8px;
+  }
 
-.notification-column {
-  display: block;
-}
-.notification-column__icons {
-  float: left;
-}
-.notification-column__content {
-  margin-left: .4rem
-}
-/* 通知欄のユーザーアイコンを重ねる */
-.notification-authors:not(:root) {
-  grid-template-columns: repeat(auto-fill, 18px);
-  margin-bottom: 4px;
-  transform: translateX(12px);
-}
-.notification-author {
-  margin-left: -12px;
-}
-.notification-author .avatar {
-  box-shadow: 0px 0px 0 2px var(--bg-color-1);
-  border-radius: 50%;
-}
-.notifications-item__title {
-  margin-bottom: 2px;
-}
-.notifications-item__content {
-  letter-spacing: -0.01rem;
-}
-/* 通知カラム内のフィードの調整 */
-.notifications-item__feed:not(:root) {
-  & * {
-    font-size: 95%;
+  .notification-column {
+    display: block;
   }
-  & .feed-creator-toggle {
-    height: 24px;
+  .notification-column__icons {
+    float: left;
   }
-}
-/* followボタン隙間調整
-       実質unfollowボタンの方がデカいのちょっと謎なのでフォントサイズ以外同一に */
-aside.profile-card:not(:root) .profile-card-button,
-.notifications-item__buttons .user-item.user-item--notification {
-  gap: 6px;
-  padding: .4rem .2rem 0;
-  & .button.button--sm.button--following,
-  & .button.button--follow {
-    border-radius: 2px;
-    min-width: 100px;
-    height: 30px;
-    padding: 0 8px;
+  .notification-column__content {
+    margin-left: .4rem
   }
-}
+  /* 通知欄のユーザーアイコンを重ねる */
+  .notification-authors:not(:root) {
+    grid-template-columns: repeat(auto-fill, 18px);
+    margin-bottom: 4px;
+    transform: translateX(12px);
+  }
+  .notification-author {
+    margin-left: -12px;
+  }
+  .notification-author .avatar {
+    box-shadow: 0px 0px 0 2px var(--bg-color-1);
+    border-radius: 50%;
+  }
+  .notifications-item__title {
+    margin-bottom: 2px;
+  }
+  .notifications-item__content {
+    letter-spacing: -0.01rem;
+  }
+  /* 通知カラム内のフィードの調整 */
+  .notifications-item__feed:not(:root) {
+    & * {
+      font-size: 95%;
+    }
+    & .feed-creator-toggle {
+      height: 24px;
+    }
+  }
+  /* followボタン隙間調整
+         実質unfollowボタンの方がデカいのちょっと謎なのでフォントサイズ以外同一に */
+  aside.profile-card:not(:root) .profile-card-button,
+  .notifications-item__buttons .user-item.user-item--notification {
+    gap: 6px;
+    padding: .4rem .2rem 0;
+    & .button.button--sm.button--following,
+    & .button.button--follow {
+      border-radius: 2px;
+      min-width: 100px;
+      height: 30px;
+      padding: 0 8px;
+    }
+  }
 
-/* いいねを☆にしてるときの色をハートと合わせる */
-.superstar {
-  --timeline-reaction-liked-icon-color: var(--primary-color) !important;
-}
-
-/* 通知ページの */
-/* いいね通知アイコン */
-.notification-icon--like {
-  /* 線のみに変更 */
-  background-color: transparent;
-  & svg {
-    stroke: var(--text-color-3);
+  /* いいねを☆にしてるときの色をハートと合わせる */
+  .superstar {
+    --timeline-reaction-liked-icon-color: var(--primary-color) !important;
   }
-}
 
-/* リポスト通知アイコン */
-.notification-icon--repost {
-  /* 線のみに変更 */
-  background-color: transparent;
-  & svg {
-    stroke: var(--text-color-3);
+  /* 通知ページの */
+  /* いいね通知アイコン */
+  .notification-icon--like {
+    /* 線のみに変更 */
+    background-color: transparent;
+    & svg {
+      stroke: var(--text-color-3);
+    }
   }
-}
+
+  /* リポスト通知アイコン */
+  .notification-icon--repost {
+    /* 線のみに変更 */
+    background-color: transparent;
+    & svg {
+      stroke: var(--text-color-3);
+    }
+  }
 
 /*-------------------------
       投稿欄の調整
   -------------------------*/
-/* 投稿欄の調整 */
-@media (min-width: 768px) {
-  .publish-group.publish-group--left .publish-wrap {
-    padding: 4px 8px;
-  }
-  .publish-quote.publish-quote--reply {
-    padding: 12px 8px;
-  }
-  .publish-form .editor-column {
-    padding: 12px 8px;
-  }
-}
-/* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
-.publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
-  & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
-    width: var(--avatar-size);
-    height: var(--avatar-size);
-    zoom: .5;
-    border-radius: 50%;
-  }
-  & .timeline-external:not(:has(.timeline-external-avatar)) {
-    padding: 0;
-    display: grid;
-    grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
-    border: 0;
-    & .timeline__meta {
-      margin: 0 .2rem;
+  @media (min-width: 768px) {
+    .publish-group.publish-group--left .publish-wrap {
+      padding: 4px 8px;
     }
-    & .timeline-external__content {
-      zoom: 1;
+    .publish-quote.publish-quote--reply {
+      padding: 12px 8px;
     }
-    & .timeline-external__description {
-      margin-left: .2rem;
-    }
-    & .timeline-external--record-publish:before {
-      left: 12px;
+    .publish-form .editor-column {
+      padding: 12px 8px;
     }
   }
-}
-
+  /* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
+  .publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
+    & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
+      width: var(--avatar-size);
+      height: var(--avatar-size);
+      zoom: .5;
+      border-radius: 50%;
+    }
+    & .timeline-external:not(:has(.timeline-external-avatar)) {
+      padding: 0;
+      display: grid;
+      grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
+      border: 0;
+      & .timeline__meta {
+        margin: 0 .2rem;
+      }
+      & .timeline-external__content {
+        zoom: 1;
+      }
+      & .timeline-external__description {
+        margin-left: .2rem;
+      }
+      & .timeline-external--record-publish:before {
+        left: 12px;
+      }
+    }
+  }
+  /* 画像投稿時の調整 */
+  .publish-upload {
+    & .image-upload-item button {
+      border-radius: 2px;
+    }
+  }
+  .v2-modal .alt-modal-item__image {
+    & img, & button span {
+      border-radius: 2px;
+    }
+  }
+  .image-editor-overlay {
+    .history-cluster, .dock-rail {
+      border-radius: 2px;
+    }
+  }
 /*-------------------------
       メディア欄の調整
   -------------------------*/
@@ -852,41 +886,4 @@ aside.profile-card:not(:root) .profile-card-button,
   gap: 8px !important;
 }
 
-
-/*-------------------------
-     2026.06.28アプデで画像拡大時のナビが見えなくなったバグへの対処(chrome)
-     - 2026.07.05 修正確認
-     
-.pswp__button{
-  & > [color="#fff"]::after {
-    content:'';
-    display:inline-block;
-    width: 50px;
-    height:60px;
-    background-repeat: no-repeat;
-    background-position: center;
-  }
-  &.pswp__button--comic-reader-button bookopen::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 7v14'/%3E%3Cpath d='M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z'/%3E%3C/svg%3E");
-  }
-  &.pswp__button--download-button save::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-download-icon lucide-download'%3E%3Cpath d='M12 15V3'/%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpath d='m7 10 5 5 5-5'/%3E%3C/svg%3E");
-  }
-  &.pswp__button--zoom zoomin::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-zoom-in-icon lucide-zoom-in'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' x2='16.65' y1='21' y2='16.65'/%3E%3Cline x1='11' x2='11' y1='8' y2='14'/%3E%3Cline x1='8' x2='14' y1='11' y2='11'/%3E%3C/svg%3E");
-  }
-  &.pswp__button--close x::after {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-x-icon lucide-x'%3E%3Cpath d='M18 6 6 18'/%3E%3Cpath d='m6 6 12 12'/%3E%3C/svg%3E");
-  }
-  &.pswp__button--arrow {
-    background-size: 32px 32px;
-    &.pswp__button--arrow--next chevronright::after{
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-right-icon lucide-chevron-right'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
-    }
-    &.pswp__button--arrow--prev chevronleft::after{
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='lucide lucide-chevron-left-icon lucide-chevron-left'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
-    }
-  }
-}
-*/
 }
