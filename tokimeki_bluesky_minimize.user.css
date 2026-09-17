@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.3
+@version        1.2.4
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -25,6 +25,10 @@
 
 .timeline__meta:not(:root) {
   margin-bottom: 1px;
+  display: block;
+  & p {
+    height: calc(var(--avatar-size) / 2)
+  }
 }
 
 /* ハンドル表示小さく */
@@ -71,19 +75,13 @@
 button:not([class*='avatar']) {
   border-radius: 2px !important;
 }
-  
+
 dialog.v2-modal:not(:root) {
   border-radius: 6px;
 }
 
 /* S幅以下 / TL本文の位置を調整 */
 @container timeline-item (width <=345px) {
-  .timeline__meta {
-    display: block;
-    & p {
-      height: calc(var(--avatar-size) / 2)
-    }
-  }
   .timeline__column:not(.timeline__column--reply) .timeline-warn-wrap {
     margin-top: .5rem;
     margin-left: calc((var(--avatar-size) + var(--avatar-gap)) * -1 + .3rem);
@@ -106,7 +104,7 @@ dialog.v2-modal:not(:root) {
   .timeline-video-wrap,
   .feed--embed,
   .embed-poll,
-  .timeline-audio-wrap{
+  .timeline-audio-wrap {
     margin-left: 0 !important;
   }
   /* リスト埋め込み */
@@ -127,6 +125,18 @@ dialog.v2-modal:not(:root) {
     }
   }
 }
+
+
+/* S幅以上 / TL本文の位置を調整 */
+@container timeline-item (width > 345px) {
+  /* ハンドル表示調整 */
+  .timeline__handle {
+    margin: 1px 0 -3px -1px;
+    font-size: 13px;
+  }
+}
+
+
 /* 投稿の調整 */
 .timeline__text {
   line-height: 1.5;
@@ -181,6 +191,13 @@ dialog.v2-modal:not(:root) {
   grid-row: 2;
   align-self: center;
   transform: translateX(.2rem) translateY(.21rem);
+}
+.timeline__badge {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  width: fit-content;
+  margin: 0 .2rem .1rem;
 }
 .timeline-translate-button {
   grid-column: 1 / -1;
@@ -332,7 +349,8 @@ dialog.v2-modal:not(:root) {
 
 /* ラベル警告の調整 */
 @container timeline-item (width <=345px) {
-  .timeline-images-wrap:has(.timeline-warn), .timeline-external-wrap:has(.timeline-warn) {
+  .timeline-images-wrap:has(.timeline-warn),
+  .timeline-external-wrap:has(.timeline-warn) {
     margin-left: 0;
     & .timeline-warn,
     & .timeline-warn-hiding {
@@ -532,172 +550,174 @@ aside.profile-card:not(:root) {
 /*-------------------------
       通知カラムの調整
   -------------------------*/
-  /* 通知カラムの内幅を調整 */
-  .timeline--notification {
-    padding: 0 8px 0 4px;
-    & .notifications-list__item:has( .timeline__item) {
-      padding-left: 4px;
-    }
-    /* 通知カラムの本文なし画像ありpostの空行を非表示 */
-    & .notifications-item__content:has(a:empty) {
-      display: none;
-    }
+/* 通知カラムの内幅を調整 */
+.timeline--notification {
+  padding: 0 8px 0 4px;
+  & .notifications-list__item:has( .timeline__item) {
+    padding-left: 4px;
   }
-  .notifications-list {
-    clear: both;
+  /* 通知カラムの本文なし画像ありpostの空行を非表示 */
+  & .notifications-item__content:has(a:empty) {
+    display: none;
   }
-  /* 通知カラムの新着通知を調整
+}
+.notifications-list {
+  clear: both;
+}
+/* 通知カラムの新着通知を調整
          ●のままだとどこに置いても据わり悪かったので三角に変更 */
-  .notifications-list__item .notifications-list__new {
-    background-color: transparent;
-    width: 0;
-    height: 0;
-    left: -4px;
-    top: 0;
-    border-radius: 0;
-    border-width: 6px;
-    border-style: solid;
-    border-color: var(--primary-color) transparent transparent var(--primary-color);
-  }
-  /* 通知カラムのフィルタ縦幅を調整 */
-  .notifications-filter-display:not(:root) {
-    margin: 0 0 16px;
-    padding: 8px;
-  }
+.notifications-list__item .notifications-list__new {
+  background-color: transparent;
+  width: 0;
+  height: 0;
+  left: -4px;
+  top: 0;
+  border-radius: 0;
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--primary-color) transparent transparent var(--primary-color);
+}
+/* 通知カラムのフィルタ縦幅を調整 */
+.notifications-filter-display:not(:root) {
+  margin: 0 0 16px;
+  padding: 8px;
+}
 
-  .notification-column {
-    display: block;
+.notification-column {
+  display: block;
+}
+.notification-column__icons {
+  float: left;
+}
+.notification-column__content {
+  margin-left: .4rem
+}
+/* 通知欄のユーザーアイコンを重ねる */
+.notification-authors:not(:root) {
+  grid-template-columns: repeat(auto-fill, 18px);
+  margin-bottom: 4px;
+  transform: translateX(12px);
+}
+.notification-author {
+  margin-left: -12px;
+}
+.notification-author .avatar {
+  box-shadow: 0px 0px 0 2px var(--bg-color-1);
+  border-radius: 50%;
+}
+.notifications-item__title {
+  margin-bottom: 2px;
+}
+.notifications-item__content {
+  letter-spacing: -0.01rem;
+}
+/* 通知カラム内のフィードの調整 */
+.notifications-item__feed:not(:root) {
+  & * {
+    font-size: 95%;
   }
-  .notification-column__icons {
-    float: left;
+  & .feed-creator-toggle {
+    height: 24px;
   }
-  .notification-column__content {
-    margin-left: .4rem
-  }
-  /* 通知欄のユーザーアイコンを重ねる */
-  .notification-authors:not(:root) {
-    grid-template-columns: repeat(auto-fill, 18px);
-    margin-bottom: 4px;
-    transform: translateX(12px);
-  }
-  .notification-author {
-    margin-left: -12px;
-  }
-  .notification-author .avatar {
-    box-shadow: 0px 0px 0 2px var(--bg-color-1);
-    border-radius: 50%;
-  }
-  .notifications-item__title {
-    margin-bottom: 2px;
-  }
-  .notifications-item__content {
-    letter-spacing: -0.01rem;
-  }
-  /* 通知カラム内のフィードの調整 */
-  .notifications-item__feed:not(:root) {
-    & * {
-      font-size: 95%;
-    }
-    & .feed-creator-toggle {
-      height: 24px;
-    }
-  }
-  /* followボタン隙間調整
+}
+/* followボタン隙間調整
          実質unfollowボタンの方がデカいのちょっと謎なのでフォントサイズ以外同一に */
-  aside.profile-card:not(:root) .profile-card-button,
-  .notifications-item__buttons .user-item.user-item--notification {
-    gap: 6px;
-    padding: .4rem .2rem 0;
-    & .button.button--sm.button--following,
-    & .button.button--follow {
-      border-radius: 2px;
-      min-width: 100px;
-      height: 30px;
-      padding: 0 8px;
-    }
+aside.profile-card:not(:root) .profile-card-button,
+.notifications-item__buttons .user-item.user-item--notification {
+  gap: 6px;
+  padding: .4rem .2rem 0;
+  & .button.button--sm.button--following,
+  & .button.button--follow {
+    border-radius: 2px;
+    min-width: 100px;
+    height: 30px;
+    padding: 0 8px;
   }
+}
 
-  /* いいねを☆にしてるときの色をハートと合わせる */
-  .superstar {
-    --timeline-reaction-liked-icon-color: var(--primary-color) !important;
-  }
+/* いいねを☆にしてるときの色をハートと合わせる */
+.superstar {
+  --timeline-reaction-liked-icon-color: var(--primary-color) !important;
+}
 
-  /* 通知ページの */
-  /* いいね通知アイコン */
-  .notification-icon--like {
-    /* 線のみに変更 */
-    background-color: transparent;
-    & svg {
-      stroke: var(--text-color-3);
-    }
+/* 通知ページの */
+/* いいね通知アイコン */
+.notification-icon--like {
+  /* 線のみに変更 */
+  background-color: transparent;
+  & svg {
+    stroke: var(--text-color-3);
   }
+}
 
-  /* リポスト通知アイコン */
-  .notification-icon--repost {
-    /* 線のみに変更 */
-    background-color: transparent;
-    & svg {
-      stroke: var(--text-color-3);
-    }
+/* リポスト通知アイコン */
+.notification-icon--repost {
+  /* 線のみに変更 */
+  background-color: transparent;
+  & svg {
+    stroke: var(--text-color-3);
   }
+}
 
 /*-------------------------
       投稿欄の調整
   -------------------------*/
-  @media (min-width: 768px) {
-    .publish-group.publish-group--left .publish-wrap {
-      padding: 4px 8px;
+@media (min-width: 768px) {
+  .publish-group.publish-group--left .publish-wrap {
+    padding: 4px 8px;
+  }
+  .publish-quote.publish-quote--reply {
+    padding: 12px 8px;
+  }
+  .publish-form .editor-column {
+    padding: 12px 8px;
+  }
+}
+/* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
+.publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
+  & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    zoom: .5;
+    border-radius: 50%;
+  }
+  & .timeline-external:not(:has(.timeline-external-avatar)) {
+    padding: 0;
+    display: grid;
+    grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
+    border: 0;
+    & .timeline__meta {
+      margin: 0 .2rem;
     }
-    .publish-quote.publish-quote--reply {
-      padding: 12px 8px;
+    & .timeline-external__content {
+      zoom: 1;
     }
-    .publish-form .editor-column {
-      padding: 12px 8px;
+    & .timeline-external__description {
+      margin-left: .2rem;
+    }
+    & .timeline-external--record-publish:before {
+      left: 12px;
     }
   }
-  /* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
-  .publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
-    & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
-      width: var(--avatar-size);
-      height: var(--avatar-size);
-      zoom: .5;
-      border-radius: 50%;
-    }
-    & .timeline-external:not(:has(.timeline-external-avatar)) {
-      padding: 0;
-      display: grid;
-      grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
-      border: 0;
-      & .timeline__meta {
-        margin: 0 .2rem;
-      }
-      & .timeline-external__content {
-        zoom: 1;
-      }
-      & .timeline-external__description {
-        margin-left: .2rem;
-      }
-      & .timeline-external--record-publish:before {
-        left: 12px;
-      }
-    }
+}
+/* 画像投稿時の調整 */
+.publish-upload {
+  & .image-upload-item button {
+    border-radius: 2px;
   }
-  /* 画像投稿時の調整 */
-  .publish-upload {
-    & .image-upload-item button {
-      border-radius: 2px;
-    }
+}
+.v2-modal .alt-modal-item__image {
+  & img,
+  & button span {
+    border-radius: 2px;
   }
-  .v2-modal .alt-modal-item__image {
-    & img, & button span {
-      border-radius: 2px;
-    }
+}
+.image-editor-overlay {
+  .history-cluster,
+  .dock-rail {
+    border-radius: 2px;
   }
-  .image-editor-overlay {
-    .history-cluster, .dock-rail {
-      border-radius: 2px;
-    }
-  }
+}
 /*-------------------------
       メディア欄の調整
   -------------------------*/
@@ -885,5 +905,4 @@ aside.profile-card:not(:root) {
   flex-direction: column !important;
   gap: 8px !important;
 }
-
 }
