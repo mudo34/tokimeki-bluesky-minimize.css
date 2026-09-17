@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.4
+@version        1.2.5
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -169,7 +169,7 @@ dialog.v2-modal:not(:root) {
   bottom: -40px;
 }
 /* 認証マークの位置を日付の横に移動 */
-.timeline__meta {
+.timeline__column .timeline__meta {
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: auto auto auto;
@@ -192,17 +192,22 @@ dialog.v2-modal:not(:root) {
   align-self: center;
   transform: translateX(.2rem) translateY(.21rem);
 }
-.timeline__badge {
+.timeline__column .timeline__badge {
   grid-column: 2;
   grid-row: 2;
   align-self: center;
   width: fit-content;
   margin: 0 .2rem .1rem;
+  position: relative;
+  top: 3px;
 }
 .timeline-translate-button {
   grid-column: 1 / -1;
   grid-row: 3;
   text-align: left;
+  margin-top: 3px;
+  margin-bottom: -3px;
+  font-size: 12px;
 }
 
 .modal-page .timeline__verified,
@@ -390,6 +395,20 @@ dialog.v2-modal:not(:root) {
     }
   }
 }
+
+/* ラベルの圧がを調整 */
+.timeline-chips {
+  margin-top: 6px;
+  margin-bottom: 2px;
+  & .timeline-chips__item {
+    height: 1.2rem;
+  }
+  & .timeline-chips__item {
+    font-size: 10px;
+    padding: 0 6px 0 4px;
+  }
+}
+
 
 /* 切り取らないサムネの表示調整 */
 :is(.deck-wrap, .single-wrap) .timeline-images-wrap:has(.timeline-image:only-child),
