@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.5
+@version        1.2.6
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -104,7 +104,8 @@ dialog.v2-modal:not(:root) {
   .timeline-video-wrap,
   .feed--embed,
   .embed-poll,
-  .timeline-audio-wrap {
+  .timeline-audio-wrap,
+  .starter-pack {
     margin-left: 0 !important;
   }
   /* リスト埋め込み */
@@ -491,7 +492,7 @@ dialog.v2-modal:not(:root) {
   }
   /* QRT用枠を上に詰める */
   & .timeline-external--record {
-    margin-top: 0;
+    /*margin-top: 0;*/
   }
   & .timeline-external--record .timeline-external__content {
     margin-left: 2px;
@@ -505,8 +506,8 @@ dialog.v2-modal:not(:root) {
     border-radius: 4px;
     overflow: hidden;
     & iframe {
-      margin-top: -1rem;
-      margin-bottom: -6.25rem;
+      margin-top: -1rem !important;
+      margin-bottom: -6.25rem !important;
       width: calc(100% - var(--avatar-gap)) !important;
     }
   }
@@ -686,39 +687,27 @@ aside.profile-card:not(:root) .profile-card-button,
     padding: 4px 8px;
   }
   .publish-quote.publish-quote--reply {
-    padding: 12px 8px;
+    padding: 6px 0px;
   }
   .publish-form .editor-column {
     padding: 12px 8px;
   }
 }
-/* なぜか投稿欄のリプ元と引用元に埋め込みと同じクラスが絶妙に違いながらついているので調整 */
-.publish-wrap .publish-item-wrap .publish-form .publish-quote.publish-quote--reply {
-  & .timeline-external.timeline-external--record.timeline-external--record-publish .timeline-external__image.timeline-external__image--round {
-    width: var(--avatar-size);
-    height: var(--avatar-size);
-    zoom: .5;
-    border-radius: 50%;
-  }
-  & .timeline-external:not(:has(.timeline-external-avatar)) {
-    padding: 0;
-    display: grid;
-    grid-template-columns: calc(var(--avatar-size) / 2) 1fr;
-    border: 0;
+/* 投稿欄内の引用 */
+.publish-wrap .publish-item-wrap .publish-form .publish-quote {
+  & .timeline-external {
+    padding: 8px 12px;
     & .timeline__meta {
-      margin: 0 .2rem;
-    }
-    & .timeline-external__content {
-      zoom: 1;
-    }
-    & .timeline-external__description {
-      margin-left: .2rem;
-    }
-    & .timeline-external--record-publish:before {
-      left: 12px;
+      margin-top: 0;
+      & .timeline__user, & .timeline__date {
+        height: unset;
+        margin-top: -4px;
+      }
     }
   }
 }
+
+
 /* 画像投稿時の調整 */
 .publish-upload {
   & .image-upload-item button {
