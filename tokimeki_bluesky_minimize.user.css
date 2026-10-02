@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           tokimeki bluesky minimize
 @namespace      https://tokimeki.blue/
-@version        1.2.6
+@version        1.3
 @description    Bluesky用のwebクライアントTOKIMEKI BlueskyのTL表示を圧縮するcss設定＞デザインから「投稿の表示間隔」「画像の表示間隔」をそれぞれ「コンパクト」にして使用してください
 @author         mudo34
 @match          https://tokimeki.blue/*
@@ -72,7 +72,7 @@
   }
 }
 
-button:not([class*='avatar']) {
+button:not([class*='avatar']), label.button:has(input[accept='application/json,.json']) {
   border-radius: 2px !important;
 }
 
@@ -855,6 +855,58 @@ aside.profile-card:not(:root) .profile-card-button,
       }
     }
   }
+  & .profile-grid .embla__container {
+      grid-template-columns: .7fr .3fr;
+  }
+  /* atmosphere */
+  & .profile-grid__right:has(.atmos-heading) {
+    background-color: var(--bg-color-2);
+    &::before {
+      border-width: 12px 0 12px 1px;
+      border-top-color: var(--bg-color-2);
+      border-bottom-color: var(--bg-color-2);
+    }
+    & .atmos-heading {
+      top: 16px;
+      left: 4px;
+      color: var(--text-color-3);
+      opacity: .25;
+    }
+    & .atmos-wrap {
+      padding: 20px 16px 16px 32px;
+    }
+    & .atmos-list.svelte-1ipn1ib {
+        gap: 4px;
+    }
+    & .atmos-item {
+      min-height: 48px;
+      padding: 0px 8px;
+      border-radius: 0;
+      /*border-bottom:1px solid transparent;*/
+      background: linear-gradient(65deg, #58dcaeb3 0%, #a788dfb3 20%, #ec67dbb3 40%, #da778eb3 60%, #e48e8ab3 80%, #ecbd5eb3 100%) 0 100% / 100% 1px no-repeat;
+    }
+    & .atmos-store-button, & .atmos-viewer-button, & .atmos-modal-toggle {
+      bottom: 8px;
+    }    
+    & .atmos-store-button {
+      right: 60px;
+    }
+    & .atmos-viewer-button {
+      right: 34px;
+    }
+    & .atmos-modal-toggle {
+      right: 8px;
+    }
+  }
+  /* 表示内容がないよう */
+  & .profile-grid__right:has(.atmos-heading, .atmos-list:empty) {
+    &::before {
+      border-width: 0;
+    }
+    & .atmos-heading {
+      display: none;
+    }
+  }
 }
 
 
@@ -901,6 +953,15 @@ aside.profile-card:not(:root) .profile-card-button,
     padding: 0 12px;
   }
 }
+
+/*-------------------------
+     設定画面の調整 
+  -------------------------*/
+/* Data Management */
+.bookmark-import-export__buttons .button{
+  min-width: 50%;
+}
+
 
 /*-------------------------
      全体の調整 
